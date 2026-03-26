@@ -1,0 +1,119 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #09090b;
+  margin: 0;
+}
+
+.subtitle {
+  color: #71717a;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #09090b;
+  margin: 3rem 0 1.25rem 0;
+  letter-spacing: -0.01em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #52525b;
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.badgeMain {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.badgeProp {
+  background: #f4f4f5;
+  color: #52525b;
+}
+
+.balanceAmount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #18181b;
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum", "lnum";
+}
+
+.analyticsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .analyticsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metricRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.metricLabel {
+  color: #71717a;
+}
+
+.metricValue {
+  font-weight: 600;
+  font-feature-settings: "tnum", "lnum";
+}
+
+.metricIncome { color: #10b981; }
+.metricExpense { color: #ef4444; }
+.metricProfit { color: #18181b; font-size: 1rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed #e4e4e7; }

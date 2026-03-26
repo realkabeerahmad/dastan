@@ -1,0 +1,190 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #09090b;
+  margin: 0;
+}
+
+.subtitle {
+  color: #71717a;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.tab {
+  padding: 0.75rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #71717a;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.activeTab {
+  color: #18181b;
+  border-bottom-color: #18181b;
+  font-weight: 600;
+}
+
+.tab:hover:not(.activeTab) {
+  color: #18181b;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .formGrid { grid-template-columns: 1fr; }
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #52525b;
+  margin-bottom: 0.5rem;
+}
+
+.input, .textarea, .select {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #09090b;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+  border-color: #18181b;
+}
+
+.currencyAddon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a1a1aa;
+  font-size: 0.875rem;
+  pointer-events: none;
+}
+
+.inputWithAddon {
+  padding-left: 2.5rem;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.submitBtn {
+  margin-top: 1rem;
+  width: 100%;
+  background: #18181b;
+  color: #ffffff;
+  border: none;
+  padding: 0.875rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorBox {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #991b1b;
+  font-size: 0.875rem;
+}
+
+.successBox {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  color: #166534;
+  font-size: 0.875rem;
+}
+
+.balanceLabel {
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-top: 0.35rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.formulaNote {
+  grid-column: 1 / -1;
+  background-color: #fafafa;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px dashed #e4e4e7;
+  font-size: 0.8125rem;
+  color: #52525b;
+  line-height: 1.5;
+}
