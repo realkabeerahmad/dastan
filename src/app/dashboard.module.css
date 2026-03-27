@@ -1,119 +1,426 @@
-.container {
-  max-width: 1000px;
+.page {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 2.5rem 2rem 5rem;
   font-family: var(--font-geist-sans), sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
-.header {
-  margin-bottom: 2rem;
+/* ── Error / Loading ── */
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 60vh;
+  color: #a1a1aa;
+  font-size: 0.875rem;
 }
 
-.title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+/* ── Hero Header ── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.heroTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
   color: #09090b;
+  margin: 0 0 0.35rem;
+  line-height: 1;
+}
+
+.heroSub {
+  font-size: 0.875rem;
+  color: #71717a;
   margin: 0;
 }
 
-.subtitle {
-  color: #71717a;
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
+.kpiStrip {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.sectionTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #09090b;
-  margin: 3rem 0 1.25rem 0;
-  letter-spacing: -0.01em;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
-}
-
-.card {
+.kpiPill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   background: #ffffff;
   border: 1px solid #e4e4e7;
   border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s;
 }
 
-.cardHeader {
+.kpiPill:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.kpiIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.cardTitle {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #52525b;
+.kpiNum {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #09090b;
+  line-height: 1;
+  margin-bottom: 0.2rem;
 }
 
-.badge {
-  font-size: 0.65rem;
-  font-weight: 600;
+.kpiLbl {
+  font-size: 0.7rem;
+  color: #71717a;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
 }
 
-.badgeMain {
-  background: #e0e7ff;
-  color: #3730a3;
+/* ── Alert Banner ── */
+.alertBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #92400e;
+  line-height: 1.5;
 }
 
-.badgeProp {
-  background: #f4f4f5;
-  color: #52525b;
+/* ── Section ── */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
 }
 
-.balanceAmount {
-  font-size: 1.5rem;
+.sectionIcon {
+  color: #a1a1aa;
+}
+
+.sectionTitle {
+  font-size: 1.125rem;
   font-weight: 700;
-  color: #18181b;
-  letter-spacing: -0.02em;
-  font-feature-settings: "tnum", "lnum";
+  color: #09090b;
+  margin: 0;
+  letter-spacing: -0.01em;
 }
 
-.analyticsGrid {
+.sectionBadge {
+  margin-left: auto;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Vault Balances ── */
+.vaultGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.vaultCard {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  transition: box-shadow 0.2s;
+}
+
+.vaultCard:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+}
+
+.vaultMain {
+  border-color: #c7d2fe;
+  background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%);
+}
+
+.vaultLabel {
+  font-size: 0.75rem;
+  color: #71717a;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vaultAmount {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum","lnum";
+  margin-bottom: 0.75rem;
+}
+
+.vaultBadge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── P&L Performance ── */
+.perfGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-@media (max-width: 768px) {
-  .analyticsGrid {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 900px) {
+  .perfGrid { grid-template-columns: 1fr; }
 }
 
-.metricRow {
+.metricCard {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid #f4f4f5;
+}
+
+.metricIcon {
+  color: #a1a1aa;
+  flex-shrink: 0;
+}
+
+.metricTitle {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #3f3f46;
+}
+
+.metricBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.metricPeriod {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  padding: 0.75rem 1.25rem;
+}
+
+.metricDivider {
+  height: 1px;
+  background: #f4f4f5;
+  margin: 0 1.25rem;
+}
+
+.periodLabel {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  font-weight: 500;
+}
+
+.periodValue {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-feature-settings: "tnum","lnum";
+}
+
+/* ── Charts ── */
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .chartsGrid { grid-template-columns: 1fr; }
+}
+
+.chartCard {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.chartTitle {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #09090b;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+}
+
+.chartSub {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+}
+
+.chartLegend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: #71717a;
+  flex-shrink: 0;
+}
+
+.legendDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.35rem;
+}
+
+.chartBody {
+  height: 280px;
+}
+
+.chartEmpty {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  color: #a1a1aa;
+  background: #fafafa;
+  border-radius: 8px;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* ── Filter Bar ── */
+.filterBar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 10px;
+  padding: 0.3rem;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.filterSep {
+  width: 1px;
+  height: 20px;
+  background: #e4e4e7;
+  margin: 0 0.2rem;
+}
+
+.filterBtn {
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.filterBtn:hover {
+  background: #ffffff;
+  color: #18181b;
+}
+
+.filterBtnActive {
+  background: #ffffff;
+  color: #09090b;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ── Custom Tooltip ── */
+.tooltip {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   font-size: 0.8125rem;
 }
 
-.metricLabel {
+.tooltipLabel {
+  font-weight: 600;
+  color: #09090b;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #52525b;
+  margin-top: 0.25rem;
+}
+
+.tooltipKey {
+  flex: 1;
   color: #71717a;
 }
 
-.metricValue {
+.tooltipVal {
   font-weight: 600;
-  font-feature-settings: "tnum", "lnum";
+  color: #09090b;
+  font-feature-settings: "tnum";
 }
 
-.metricIncome { color: #10b981; }
-.metricExpense { color: #ef4444; }
-.metricProfit { color: #18181b; font-size: 1rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed #e4e4e7; }
+/* ── Color Utilities ── */
+.green { color: #16a34a; }
+.red   { color: #dc2626; }

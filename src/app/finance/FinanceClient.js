@@ -16,6 +16,7 @@ export default function FinanceClient({ properties, accounts }) {
   // Expense State
   const [expenseProp, setExpenseProp] = useState("");
   const [expenseDate, setExpenseDate] = useState("");
+  const [expenseCurrency, setExpenseCurrency] = useState("USD");
   
   // Withdraw State
   const [fromAccount, setFromAccount] = useState("");
@@ -146,7 +147,13 @@ export default function FinanceClient({ properties, accounts }) {
 
             <div>
               <label className={styles.label}>Currency Ledger</label>
-              <select name="currencyCode" className={styles.select} required defaultValue="USD">
+              <select 
+                name="currencyCode" 
+                className={styles.select} 
+                required 
+                value={expenseCurrency}
+                onChange={(e) => setExpenseCurrency(e.target.value)}
+              >
                 <option value="USD">USD</option>
                 <option value="PKR">PKR</option>
               </select>
@@ -155,7 +162,7 @@ export default function FinanceClient({ properties, accounts }) {
             <div className={styles.fullWidth}>
               <label className={styles.label}>Amount to Deduct</label>
               <div className={styles.inputWrapper}>
-                <span className={styles.currencyAddon}>$</span>
+                <span className={styles.currencyAddon}>{expenseCurrency === "PKR" ? "₨" : "$"}</span>
                 <input 
                   type="number" 
                   name="amount" 

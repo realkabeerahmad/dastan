@@ -1,12 +1,17 @@
 "use server";
 
 import { query, transaction } from "@/lib/db";
+import { requireSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
-// Fetches all properties explicitly for the Expense dropdown.
+// Fetches all properties for the Expense dropdown
 export async function getPropertiesForFinance() {
   try {
-    const res = await query(`SELECT property_id, property_name FROM properties ORDER BY property_name ASC`);
+    const session = await requireSession();
+    const res = await query(
+      `SELECT property_id, property_name FROM properties WHERE business_id = $1 ORDER BY property_name ASC`,
+      [session.businessId]
+    );
     return res.rows;
   } catch (err) {
     console.error(err);
@@ -14,29 +19,23 @@ export async function getPropertiesForFinance() {
   }
 }
 
-// Fetches all valid Accounts in the DB (Both Main and Property accounts) for Withdrawals.
+// Fetches all valid Accounts for Withdrawal dropdown
 export async function getAllAccounts() {
   try {
+    const session = await requireSession();
     const res = await query(`
       SELECT a.srno, a.currency_code, a.account_type, a.income, a.profit, a.expense,
              p.property_name 
       FROM accounts a
       LEFT JOIN properties p ON a.property_id = p.property_id
+      WHERE a.business_id = $1
       ORDER BY a.account_type ASC, a.currency_code ASC
-    `);
-    
-    // Map them cleanly for the UI dropdown
+    `, [session.businessId]);
     return res.rows.map(acc => {
       const label = acc.account_type === 'Main' 
         ? `[Main] Global ${acc.currency_code} Ledger`
         : `[Property] ${acc.property_name} (${acc.currency_code})`;
-      
-      return {
-        id: acc.srno,
-        name: label,
-        currencyCode: acc.currency_code,
-        balance: Number(acc.profit)
-      };
+      return { id: acc.srno, name: label, currencyCode: acc.currency_code, balance: Number(acc.profit) };
     });
   } catch (err) {
     console.error(err);
@@ -48,7 +47,6 @@ export async function postExpense(formData) {
   try {
     const { propertyId, amount, currencyCode, details, date } = formData;
     const numAmount = Number(amount);
-    const isoDate = new Date(date).toISOString();
 
     await transaction(async (client) => {
       // 1. Fetch Property Account
@@ -101,19 +99,20 @@ async function safelyModifyAccount(client, accountSrno, amountToModify) {
   const accRes = await client.query(`SELECT account_type, currency_code FROM accounts WHERE srno = $1`, [accountSrno]);
   if (!accRes.rows.length) throw new Error("Target Account not found.");
   const acc = accRes.rows[0];
+  let mainAccountSrno = null;
 
   // Modify the specific account directly (Income & Profit)
   await client.query(`UPDATE accounts SET income = income + $1, profit = profit + $1 WHERE srno = $2`, [amountToModify, accountSrno]);
 
   // If this was a localized Property Account, ripple the effect natively to its parent Main ledger
-  if (acc.account_type === 'Property') {
-    const mainAccRes = await client.query(`SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1 LIMIT 1`, [acc.currency_code]);
-    if (mainAccRes.rows.length > 0) {
-      const mainAccountSrno = mainAccRes.rows[0].srno;
+  const mainAccRes = await client.query(`SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1 LIMIT 1`, [acc.currency_code]);
+  if (mainAccRes.rows.length > 0) {
+    mainAccountSrno = mainAccRes.rows[0].srno;
+    if (acc.account_type === 'Property') {
       await client.query(`UPDATE accounts SET income = income + $1, profit = profit + $1 WHERE srno = $2`, [amountToModify, mainAccountSrno]);
     }
   }
-  return acc.currency_code;
+  return { currencyCode: acc.currency_code, mainAccountSrno };
 }
 
 export async function postWithdrawal(formData) {
@@ -122,27 +121,26 @@ export async function postWithdrawal(formData) {
     const debitAmount = Number(amount);
     const rate = Number(exchangeRate);
     const creditAmount = debitAmount * rate;
-    const isoDate = new Date(date).toISOString();
 
     if (fromAccountSrno === toAccountSrno) throw new Error("Cannot transfer to the same account.");
 
     await transaction(async (client) => {
       // 1. Debit the Origin Ledger (Negative Addition)
-      const fromCurr = await safelyModifyAccount(client, fromAccountSrno, -debitAmount);
+      const fromResult = await safelyModifyAccount(client, fromAccountSrno, -debitAmount);
       
       await client.query(
-        `INSERT INTO transactions (currency_code, account_srno, amount, transaction_type, remarks, trans_date)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [fromCurr, fromAccountSrno, -debitAmount, "WithdrawalDebit", `Withdrawal: ${details}`, date]
+        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [fromResult.currencyCode, fromAccountSrno, fromResult.mainAccountSrno, -debitAmount, "WithdrawalDebit", `Withdrawal: ${details}`, date]
       );
 
       // 2. Credit the Destination Ledger (Positive Addition via Exchange Rate)
-      const toCurr = await safelyModifyAccount(client, toAccountSrno, creditAmount);
+      const toResult = await safelyModifyAccount(client, toAccountSrno, creditAmount);
       
       await client.query(
-        `INSERT INTO transactions (currency_code, account_srno, amount, transaction_type, remarks, trans_date)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [toCurr, toAccountSrno, creditAmount, "WithdrawalCredit", `Received Transfer: ${details}`, date]
+        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [toResult.currencyCode, toAccountSrno, toResult.mainAccountSrno, creditAmount, "WithdrawalCredit", `Received Transfer: ${details}`, date]
       );
     });
 

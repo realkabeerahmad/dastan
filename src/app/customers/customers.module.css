@@ -1,0 +1,230 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #09090b;
+  margin: 0 0 0.5rem 0;
+}
+
+.subtitle {
+  color: #71717a;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.errorBox {
+  padding: 0.75rem;
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.customerName {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #18181b;
+  margin: 0;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  color: #a1a1aa;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.editBtn:hover {
+  color: #18181b;
+  background: #f4f4f5;
+}
+
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #52525b;
+}
+
+.icon {
+  color: #a1a1aa;
+}
+
+.metricsBox {
+  display: flex;
+  justify-content: space-between;
+  background: #fafafa;
+  border: 1px solid #f4f4f5;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metricLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #a1a1aa;
+  letter-spacing: 0.05em;
+}
+
+.metricValue {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #18181b;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #ffffff;
+  border: 1px dashed #d4d4d8;
+  border-radius: 12px;
+}
+
+.emptyIcon {
+  color: #d4d4d8;
+  margin-bottom: 1rem;
+}
+
+.emptyText {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #18181b;
+  margin: 0 0 0.5rem 0;
+}
+
+.emptySubText {
+  font-size: 0.875rem;
+  color: #71717a;
+  margin: 0;
+}
+
+/* Edit Form Styles */
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #52525b;
+}
+
+.input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #09090b;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.buttonPrimary, .buttonSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.buttonPrimary {
+  background: #09090b;
+  color: #ffffff;
+  border: 1px solid #09090b;
+}
+
+.buttonPrimary:disabled {
+  background: #52525b;
+  border-color: #52525b;
+  cursor: not-allowed;
+}
+
+.buttonSecondary {
+  background: #ffffff;
+  color: #09090b;
+  border: 1px solid #e4e4e7;
+}
+
+.buttonSecondary:hover {
+  background: #f4f4f5;
+}

@@ -1,4 +1,4 @@
-import { getBookingById } from "@/actions/booking-actions";
+import { getBookingById, getBookingSegments } from "@/actions/booking-actions";
 import { notFound } from "next/navigation";
 import BookingDetailClient from "./BookingDetailClient";
 
@@ -11,15 +11,14 @@ export default async function BookingDetailPage({ params }) {
   
   if (!id) notFound();
 
-  const booking = await getBookingById(id);
+  const booking  = await getBookingById(id);
+  const segments = await getBookingSegments(id);
 
-  if (!booking) {
-    notFound();
-  }
+  if (!booking) notFound();
 
   return (
     <main style={{ backgroundColor: "#fafafa", minHeight: "100vh" }}>
-      <BookingDetailClient booking={booking} />
+      <BookingDetailClient booking={booking} initialSegments={segments} />
     </main>
   );
 }

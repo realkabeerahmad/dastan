@@ -2,12 +2,14 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { Plus, Building, MapPin, Loader2, ArrowLeft, Edit2, Tag, Info } from "lucide-react";
+import { useRouter } from "next/navigation";
 import styles from "./properties.module.css";
 import { createProperty, updateProperty, getPropertyTypes, getPropertyStatuses } from "@/actions/property-actions";
 import { getCountries, getStates, getCities } from "@/actions/location-actions";
 import SearchableSelect from "@/components/ui/SearchableSelect";
 
 export default function ManagePropertiesClient({ initialProperties }) {
+  const router = useRouter();
   // 'list', 'add', 'edit'
   const [viewMode, setViewMode] = useState('list');
   const [editData, setEditData] = useState(null);
@@ -145,6 +147,7 @@ export default function ManagePropertiesClient({ initialProperties }) {
         setErrorMsg(res.error);
       } else {
         resetForm();
+        router.refresh();
       }
     });
   }

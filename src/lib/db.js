@@ -1,13 +1,13 @@
 import { Pool } from 'pg';
 
-let pool;
+const globalForPg = globalThis;
 
-if (!pool) {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    // Add SSL support if required for your host:
-    // ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
-  });
+const pool = globalForPg._pgPool ?? new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPg._pgPool = pool;
 }
 
 /**

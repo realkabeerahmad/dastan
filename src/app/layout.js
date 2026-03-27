@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
+import { getSession } from "@/lib/auth";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,12 +18,13 @@ export const metadata = {
   description: "Modern Property Management system",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getSession();
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <div style={{ display: "flex", minHeight: "100vh" }}>
-          <Sidebar />
+          <Sidebar session={session} />
           <div style={{ flex: 1, marginLeft: "260px" }}>
             {children}
           </div>
