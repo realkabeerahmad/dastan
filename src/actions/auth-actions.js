@@ -40,6 +40,12 @@ export async function registerBusiness(formData) {
     );
     const user = userRes.rows[0];
 
+    // Auto-create one Main account per currency for this business
+    await query(
+      `INSERT INTO accounts (currency_code, account_type, business_id) VALUES ($1, 'Main', $2), ($3, 'Main', $2)`,
+      ["USD", businessId, "PKR"]
+    );
+
     await setSessionCookie({
       businessId,
       userId: user.user_id,

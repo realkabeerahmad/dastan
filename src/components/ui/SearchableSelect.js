@@ -51,10 +51,10 @@ export default function SearchableSelect({
         onClick={() => !disabled && setIsOpen(!isOpen)}
         style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
-          border: isOpen ? "1px solid #a1a1aa" : "1px solid #e4e4e7",
+          border: isOpen ? "1px solid #a1a1aa" : "1px solid rgba(255, 255, 255, 0.08)",
           borderRadius: "8px", padding: "0.625rem 0.75rem",
-          backgroundColor: disabled ? "#f4f4f5" : "#ffffff", cursor: disabled ? "not-allowed" : "pointer",
-          fontSize: "0.875rem", color: selectedOption ? "#09090b" : "#71717a",
+          backgroundColor: disabled ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 0.03)", cursor: disabled ? "not-allowed" : "pointer",
+          fontSize: "0.875rem", color: selectedOption ? "#ffffff" : "#a1a1aa",
           boxShadow: isOpen ? "0 0 0 2px rgba(244, 244, 245, 1)" : "none",
           transition: "all 0.2s ease"
         }}
@@ -62,17 +62,17 @@ export default function SearchableSelect({
         <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           {selectedOption ? selectedOption.name : placeholder}
         </span>
-        <ChevronDown size={16} color="#71717a" style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s" }} />
+        <ChevronDown size={16} color="#a1a1aa" style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s" }} />
       </div>
 
       {isOpen && (
         <div style={{
           position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0,
-          backgroundColor: "#ffffff", border: "1px solid #e4e4e7", borderRadius: "8px",
+          backgroundColor: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px",
           boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)",
           zIndex: 50, maxHeight: "250px", display: "flex", flexDirection: "column"
         }}>
-          <div style={{ padding: "0.5rem", borderBottom: "1px solid #f4f4f5", display: "flex", alignItems: "center", gap: "0.5rem", backgroundColor: "#ffffff", borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}>
+          <div style={{ padding: "0.5rem", borderBottom: "1px solid #f4f4f5", display: "flex", alignItems: "center", gap: "0.5rem", backgroundColor: "rgba(255, 255, 255, 0.03)", borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}>
             <Search size={14} color="#a1a1aa" />
             <input 
               autoFocus
@@ -81,7 +81,7 @@ export default function SearchableSelect({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                border: "none", outline: "none", width: "100%", fontSize: "0.875rem", color: "#09090b",
+                border: "none", outline: "none", width: "100%", fontSize: "0.875rem", color: "#ffffff",
                 backgroundColor: "transparent"
               }}
             />
@@ -90,7 +90,7 @@ export default function SearchableSelect({
           
           <div style={{ overflowY: "auto", padding: "0.25rem 0", flex: 1 }}>
             {filteredOptions.length === 0 ? (
-              <div style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", color: "#71717a", textAlign: "center" }}>
+              <div style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", color: "#a1a1aa", textAlign: "center" }}>
                 No results found
               </div>
             ) : (
@@ -103,11 +103,11 @@ export default function SearchableSelect({
                     setSearchTerm("");
                   }}
                   style={{
-                    padding: "0.5rem 1rem", fontSize: "0.875rem", color: "#18181b",
-                    cursor: "pointer", backgroundColor: value === opt.name ? "#f4f4f5" : "transparent"
+                    padding: "0.5rem 1rem", fontSize: "0.875rem", color: "#ffffff",
+                    cursor: "pointer", backgroundColor: value === opt.name ? "rgba(255, 255, 255, 0.05)" : "transparent"
                   }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = "#f4f4f5"}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = value === opt.name ? "#f4f4f5" : "transparent"}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = "rgba(255, 255, 255, 0.05)"}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = value === opt.name ? "rgba(255, 255, 255, 0.05)" : "transparent"}
                 >
                   {opt.name}
                 </div>

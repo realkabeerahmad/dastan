@@ -7,7 +7,7 @@ export default async function TransactionsPage() {
   const transactions = await getTransactions();
   
   return (
-    <main style={{ backgroundColor: "#fafafa", minHeight: "100vh" }}>
+    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
       <TransactionsClient initialTransactions={transactions} />
     </main>
   );

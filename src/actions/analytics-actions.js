@@ -16,7 +16,7 @@ export async function getDashboardAnalytics() {
       ORDER BY a.account_type ASC, a.currency_code ASC
     `, [bid]);
 
-    // 2. Historical Snapshots
+    // 2. Fetch Historical Snapshots from Python ETL (account_summary)
     const historyMonthly = await query(`
       SELECT currency_code, SUM(daily_income) as inc, SUM(daily_expense) as exp, SUM(daily_profit) as prof
       FROM account_summary
@@ -31,7 +31,7 @@ export async function getDashboardAnalytics() {
       GROUP BY currency_code
     `, [bid]);
 
-    // 3. Intra-day Live Data
+    // 3. Fetch Intra-day Live Data (Since Python strictly aggregates up to Today - 1)
     const todayRes = await query(`
       SELECT currency_code, 
              SUM(CASE WHEN transaction_type IN ('BookingIncome', 'BookingCancellation', 'BookingPendingReversal') THEN amount ELSE 0 END) as inc,
@@ -45,11 +45,13 @@ export async function getDashboardAnalytics() {
     const propsCount = await query(`SELECT COUNT(*) as count FROM properties WHERE business_id = $1`, [bid]);
     const custsCount = await query(`SELECT COUNT(*) as count FROM customers WHERE business_id = $1`, [bid]);
     const transCount = await query(`SELECT COUNT(*) as count FROM transactions WHERE business_id = $1`, [bid]);
-    
-    // 5. Bookings Velocity (unused standalone but kept)
+
+    // 5. Bookings Velocity
     const bookingsRatio = await query(`
-      SELECT booking_status as name, COUNT(*) as value FROM bookings
-      WHERE business_id = $1 GROUP BY booking_status
+      SELECT booking_status as name, COUNT(*) as value
+      FROM bookings
+      WHERE business_id = $1
+      GROUP BY booking_status
     `, [bid]);
 
     // 6. Property Performance Arrays
@@ -60,7 +62,7 @@ export async function getDashboardAnalytics() {
       WHERE a.account_type = 'Property' AND p.business_id = $1
     `, [bid]);
 
-    // 7. Time-Series Revenue
+    // 7. Time-Series Revenue — extended to 365 days for Year tab
     const timeSeries = await query(`
       SELECT date_trunc('day', summary_date) as date, 
              currency_code, 
@@ -73,7 +75,7 @@ export async function getDashboardAnalytics() {
       ORDER BY date ASC
     `, [bid]);
 
-    // 8. Booking ratios split by tenure
+    // 8. Booking ratios split by tenure for filtering
     const bookingRatioToday = await query(`
       SELECT booking_status as name, COUNT(*) as value FROM bookings
       WHERE business_id = $1 AND DATE(created_at) = CURRENT_DATE GROUP BY booking_status
@@ -103,9 +105,9 @@ export async function getDashboardAnalytics() {
       },
       charts: {
         bookingRatio: {
-          day:   mapRatio(bookingRatioToday.rows),
+          day: mapRatio(bookingRatioToday.rows),
           month: mapRatio(bookingRatioMonth.rows),
-          year:  mapRatio(bookingRatioYear.rows),
+          year: mapRatio(bookingRatioYear.rows),
         },
         propertyPerformance: propPerformance.rows.map(r => ({
           ...r,

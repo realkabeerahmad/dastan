@@ -28,21 +28,21 @@
   gap: 2rem;
   flex-wrap: wrap;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .heroTitle {
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: -0.04em;
-  color: #09090b;
+  color: #ffffff;
   margin: 0 0 0.35rem;
   line-height: 1;
 }
 
 .heroSub {
   font-size: 0.875rem;
-  color: #71717a;
+  color: #a1a1aa;
   margin: 0;
 }
 
@@ -56,16 +56,16 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 0.75rem 1.25rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: box-shadow 0.2s;
 }
 
 .kpiPill:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .kpiIcon {
@@ -81,14 +81,14 @@
 .kpiNum {
   font-size: 1.375rem;
   font-weight: 700;
-  color: #09090b;
+  color: #ffffff;
   line-height: 1;
   margin-bottom: 0.2rem;
 }
 
 .kpiLbl {
   font-size: 0.7rem;
-  color: #71717a;
+  color: #a1a1aa;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -99,12 +99,15 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
+  background: rgba(245, 158, 11, 0.1);
+  /* FIX: was #fffbeb (light yellow) — dark-compatible amber tint */
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  /* FIX: was #fde68a */
   border-radius: 10px;
   padding: 0.875rem 1.25rem;
   font-size: 0.8125rem;
-  color: #92400e;
+  color: #fbbf24;
+  /* FIX: was #92400e (very dark amber) — unreadable on dark bg */
   line-height: 1.5;
 }
 
@@ -123,15 +126,17 @@
 .sectionTitle {
   font-size: 1.125rem;
   font-weight: 700;
-  color: #09090b;
+  color: #ffffff;
   margin: 0;
   letter-spacing: -0.01em;
 }
 
 .sectionBadge {
   margin-left: auto;
-  background: #dcfce7;
-  color: #166534;
+  background: rgba(16, 185, 129, 0.12);
+  /* FIX: was #dcfce7 (light green) — transparent dark-compatible */
+  color: #34d399;
+  /* FIX: was #166534 (very dark green) — not readable on dark */
   font-size: 0.7rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
@@ -148,27 +153,29 @@
 }
 
 .vaultCard {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: box-shadow 0.2s;
 }
 
 .vaultCard:hover {
-  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
 }
 
 .vaultMain {
-  border-color: #c7d2fe;
-  background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+  /* FIX: was #c7d2fe (light indigo) — use dark-compatible purple tint */
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.12) 0%, rgba(79, 70, 229, 0.08) 100%);
+  /* FIX: was light #f5f3ff/#eef2ff — replaced with dark-compatible gradient */
 }
 
 .vaultLabel {
   font-size: 0.75rem;
-  color: #71717a;
+  color: #a1a1aa;
   font-weight: 500;
   margin-bottom: 0.75rem;
   white-space: nowrap;
@@ -180,7 +187,7 @@
   font-size: 1.375rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  font-feature-settings: "tnum","lnum";
+  font-feature-settings: "tnum", "lnum";
   margin-bottom: 0.75rem;
 }
 
@@ -200,15 +207,17 @@
 }
 
 @media (max-width: 900px) {
-  .perfGrid { grid-template-columns: 1fr; }
+  .perfGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .metricCard {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .metricHeader {
@@ -216,7 +225,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 1.25rem 0.75rem;
-  border-bottom: 1px solid #f4f4f5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .metricIcon {
@@ -227,7 +236,7 @@
 .metricTitle {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #3f3f46;
+  color: #d4d4d8;
 }
 
 .metricBody {
@@ -245,7 +254,7 @@
 
 .metricDivider {
   height: 1px;
-  background: #f4f4f5;
+  background: rgba(255, 255, 255, 0.05);
   margin: 0 1.25rem;
 }
 
@@ -258,7 +267,7 @@
 .periodValue {
   font-size: 0.875rem;
   font-weight: 600;
-  font-feature-settings: "tnum","lnum";
+  font-feature-settings: "tnum", "lnum";
 }
 
 /* ── Charts ── */
@@ -269,15 +278,17 @@
 }
 
 @media (max-width: 900px) {
-  .chartsGrid { grid-template-columns: 1fr; }
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .chartCard {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .chartHeader {
@@ -291,7 +302,7 @@
 .chartTitle {
   font-size: 0.9375rem;
   font-weight: 700;
-  color: #09090b;
+  color: #ffffff;
   margin-bottom: 0.25rem;
   letter-spacing: -0.01em;
 }
@@ -306,7 +317,7 @@
   align-items: center;
   gap: 1rem;
   font-size: 0.75rem;
-  color: #71717a;
+  color: #a1a1aa;
   flex-shrink: 0;
 }
 
@@ -329,7 +340,7 @@
   justify-content: center;
   font-size: 0.8125rem;
   color: #a1a1aa;
-  background: #fafafa;
+  background: transparent;
   border-radius: 8px;
   text-align: center;
   padding: 1rem;
@@ -341,8 +352,8 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #f4f4f5;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 0.3rem;
 }
@@ -355,7 +366,7 @@
 .filterSep {
   width: 1px;
   height: 20px;
-  background: #e4e4e7;
+  background: rgba(255, 255, 255, 0.08);
   margin: 0 0.2rem;
 }
 
@@ -366,7 +377,7 @@
   padding: 0.3rem 0.75rem;
   font-size: 0.75rem;
   font-weight: 500;
-  color: #71717a;
+  color: #a1a1aa;
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
@@ -374,30 +385,30 @@
 }
 
 .filterBtn:hover {
-  background: #ffffff;
-  color: #18181b;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
 }
 
 .filterBtnActive {
-  background: #ffffff;
-  color: #09090b;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* ── Custom Tooltip ── */
 .tooltip {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 0.75rem 1rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   font-size: 0.8125rem;
 }
 
 .tooltipLabel {
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
   margin-bottom: 0.5rem;
   font-size: 0.75rem;
 }
@@ -406,21 +417,26 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #52525b;
+  color: #a1a1aa;
   margin-top: 0.25rem;
 }
 
 .tooltipKey {
   flex: 1;
-  color: #71717a;
+  color: #a1a1aa;
 }
 
 .tooltipVal {
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
   font-feature-settings: "tnum";
 }
 
 /* ── Color Utilities ── */
-.green { color: #16a34a; }
-.red   { color: #dc2626; }
+.green {
+  color: #16a34a;
+}
+
+.red {
+  color: #dc2626;
+}

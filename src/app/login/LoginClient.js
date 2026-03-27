@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { loginUser } from "@/actions/auth-actions";
 import styles from "./auth.module.css";
-import { Building, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function LoginClient() {
   const [error, setError] = useState("");
@@ -24,8 +24,12 @@ export default function LoginClient() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.logoArea}>
-          <div className={styles.logoIcon}><Building size={22} /></div>
-          <h1 className={styles.appName}>Dastan</h1>
+          <Link href='/'>
+            <div>
+              <h1 className={styles.appName}>Mulk</h1>
+              <div className={styles.appSlogan}>Manage renting portfolios</div>
+            </div>
+          </Link>
         </div>
         <h2 className={styles.heading}>Welcome back</h2>
         <p className={styles.sub}>Sign in to your business account to continue.</p>

@@ -7,7 +7,7 @@ export default async function CustomersPage() {
   const customers = await getCustomers();
   
   return (
-    <main style={{ backgroundColor: "#fafafa", minHeight: "100vh" }}>
+    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
       <CustomersClient initialCustomers={customers} />
     </main>
   );

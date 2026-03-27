@@ -1,34 +1,38 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Outfit } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
 import { getSession } from "@/lib/auth";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
 export const metadata = {
-  title: "Dastan Property Management",
+  title: "Mulk Property Management",
   description: "Modern Property Management system",
 };
 
 export default async function RootLayout({ children }) {
   const session = await getSession();
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body>
-        <div style={{ display: "flex", minHeight: "100vh" }}>
-          <Sidebar session={session} />
-          <div style={{ flex: 1, marginLeft: "260px" }}>
-            {children}
+        {session ? (
+          <div style={{ display: "flex", minHeight: "100vh" }}>
+            <Sidebar session={session} />
+            <div style={{ flex: 1, marginLeft: "260px" }}>
+              {children}
+            </div>
           </div>
-        </div>
+        ) : (
+          children
+        )}
       </body>
     </html>
   );

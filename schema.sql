@@ -35,6 +35,10 @@ DROP TABLE IF EXISTS countries CASCADE;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+insert into countries (name, country_code) values ('Pakistan', 'PK');
+insert into states (name, state_code, country_srno) values ('Punjab', 'PB', 1),('Sindh', 'SD', 1),('KPK', 'KP', 1),('Balochistan', 'BL', 1),('Gilgit Baltistan', 'GB', 1),('Azad Kashmir', 'AK', 1);
+insert into cities (name, state_srno, country_srno) values ('Lahore', 1, 1),('Karachi', 2, 1),('Peshawar', 3, 1),('Quetta', 4, 1),('Gilgit', 5, 1),('Muzaffarabad', 6, 1),('Islamabad', 1, 1);
+
 -- 1. Reference Data
 CREATE TABLE countries (
   srno SERIAL PRIMARY KEY,

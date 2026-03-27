@@ -8,10 +8,10 @@
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  border: 1px solid #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 0.625rem 0.75rem;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.03);
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -23,7 +23,7 @@
 .inputText {
   flex: 1;
   font-size: 0.875rem;
-  color: #09090b;
+  color: #ffffff;
   user-select: none;
 }
 
@@ -36,11 +36,14 @@
   top: calc(100% + 0.5rem);
   left: 0;
   width: 280px;
-  background-color: #ffffff;
-  border: 1px solid #e4e4e7;
+  background-color: #111111;
+  /* FIX: was near-transparent rgba — popover needs solid bg to not bleed through */
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-  z-index: 50;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  /* FIX: increased shadow opacity for dark theme */
+  z-index: var(--z-dropdown, 100);
+  /* FIX: was hardcoded 50 — now uses z-index system */
   padding: 1rem;
   font-family: var(--font-geist-sans), sans-serif;
 }
@@ -55,12 +58,12 @@
 .monthLabel {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
 }
 
 .navButton {
   background: transparent;
-  border: 1px solid #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   width: 28px;
   height: 28px;
@@ -68,13 +71,13 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #71717a;
+  color: #a1a1aa;
   transition: all 0.2s ease;
 }
 
 .navButton:hover {
-  background: #f4f4f5;
-  color: #18181b;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 }
 
 .weekDays {
@@ -102,14 +105,14 @@
   align-items: center;
   justify-content: center;
   font-size: 0.875rem;
-  color: #18181b;
+  color: #ffffff;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .day:hover:not(.empty):not(.selected) {
-  background-color: #f4f4f5;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .empty {
@@ -117,13 +120,14 @@
 }
 
 .selected {
-  background-color: #18181b;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #09090b;
+  /* FIX: was #ffffff — white text on white background was completely invisible */
   font-weight: 600;
 }
 
 .today:not(.selected) {
-  color: #09090b;
-  background-color: #f4f4f5;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
   font-weight: 600;
 }

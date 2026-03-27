@@ -10,7 +10,7 @@ export default async function PropertiesPage() {
   const properties = await getProperties();
 
   return (
-    <main style={{ backgroundColor: "#fafafa", minHeight: "100vh" }}>
+    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
       <ManagePropertiesClient initialProperties={properties} />
     </main>
   );

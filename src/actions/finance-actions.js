@@ -45,6 +45,7 @@ export async function getAllAccounts() {
 
 export async function postExpense(formData) {
   try {
+    const session = await requireSession();
     const { propertyId, amount, currencyCode, details, date } = formData;
     const numAmount = Number(amount);
 
@@ -57,10 +58,10 @@ export async function postExpense(formData) {
       if (propAccRes.rows.length === 0) throw new Error(`Property Account (${currencyCode}) not found.`);
       const propertyAccountSrno = propAccRes.rows[0].srno;
 
-      // 2. Fetch Main Account
+      // 2. Fetch Main Account (business-scoped)
       const mainAccRes = await client.query(
-        `SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1 LIMIT 1`,
-        [currencyCode]
+        `SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1 AND business_id = $2 LIMIT 1`,
+        [currencyCode, session.businessId]
       );
       if (mainAccRes.rows.length === 0) throw new Error(`Global Main Account (${currencyCode}) not found.`);
       const mainAccountSrno = mainAccRes.rows[0].srno;
@@ -77,11 +78,12 @@ export async function postExpense(formData) {
         [numAmount, mainAccountSrno]
       );
 
-      // 5. Insert Negative Expense Transaction
+      // 5. Insert Expense Transaction with the form-supplied date
       await client.query(
-        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [currencyCode, propertyAccountSrno, mainAccountSrno, -numAmount, "Expense", details, date]
+        `INSERT INTO transactions
+           (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date, business_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [currencyCode, propertyAccountSrno, mainAccountSrno, -numAmount, "Expense", details, date, session.businessId]
       );
     });
 
@@ -95,7 +97,7 @@ export async function postExpense(formData) {
 }
 
 // Logic: Modifying an account modifies IT, and IF it's a Property, modifies its parent Main Account too.
-async function safelyModifyAccount(client, accountSrno, amountToModify) {
+async function safelyModifyAccount(client, accountSrno, amountToModify, businessId) {
   const accRes = await client.query(`SELECT account_type, currency_code FROM accounts WHERE srno = $1`, [accountSrno]);
   if (!accRes.rows.length) throw new Error("Target Account not found.");
   const acc = accRes.rows[0];
@@ -105,7 +107,10 @@ async function safelyModifyAccount(client, accountSrno, amountToModify) {
   await client.query(`UPDATE accounts SET income = income + $1, profit = profit + $1 WHERE srno = $2`, [amountToModify, accountSrno]);
 
   // If this was a localized Property Account, ripple the effect natively to its parent Main ledger
-  const mainAccRes = await client.query(`SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1 LIMIT 1`, [acc.currency_code]);
+  const mainAccRes = await client.query(
+    `SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1 AND business_id = $2 LIMIT 1`,
+    [acc.currency_code, businessId]
+  );
   if (mainAccRes.rows.length > 0) {
     mainAccountSrno = mainAccRes.rows[0].srno;
     if (acc.account_type === 'Property') {
@@ -117,6 +122,7 @@ async function safelyModifyAccount(client, accountSrno, amountToModify) {
 
 export async function postWithdrawal(formData) {
   try {
+    const session = await requireSession();
     const { fromAccountSrno, toAccountSrno, amount, exchangeRate, date, details } = formData;
     const debitAmount = Number(amount);
     const rate = Number(exchangeRate);
@@ -126,21 +132,21 @@ export async function postWithdrawal(formData) {
 
     await transaction(async (client) => {
       // 1. Debit the Origin Ledger (Negative Addition)
-      const fromResult = await safelyModifyAccount(client, fromAccountSrno, -debitAmount);
+      const fromResult = await safelyModifyAccount(client, fromAccountSrno, -debitAmount, session.businessId);
       
       await client.query(
-        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [fromResult.currencyCode, fromAccountSrno, fromResult.mainAccountSrno, -debitAmount, "WithdrawalDebit", `Withdrawal: ${details}`, date]
+        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date, business_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [fromResult.currencyCode, fromAccountSrno, fromResult.mainAccountSrno, -debitAmount, "WithdrawalDebit", `Withdrawal: ${details}`, date, session.businessId]
       );
 
       // 2. Credit the Destination Ledger (Positive Addition via Exchange Rate)
-      const toResult = await safelyModifyAccount(client, toAccountSrno, creditAmount);
+      const toResult = await safelyModifyAccount(client, toAccountSrno, creditAmount, session.businessId);
       
       await client.query(
-        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [toResult.currencyCode, toAccountSrno, toResult.mainAccountSrno, creditAmount, "WithdrawalCredit", `Received Transfer: ${details}`, date]
+        `INSERT INTO transactions (currency_code, account_srno, primary_account_srno, amount, transaction_type, remarks, trans_date, business_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [toResult.currencyCode, toAccountSrno, toResult.mainAccountSrno, creditAmount, "WithdrawalCredit", `Received Transfer: ${details}`, date, session.businessId]
       );
     });
 

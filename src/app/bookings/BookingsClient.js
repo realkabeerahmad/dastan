@@ -7,12 +7,34 @@ import styles from "./bookings.module.css";
 import { createBooking } from "@/actions/booking-actions";
 import SearchableSelect from "@/components/ui/SearchableSelect";
 
-export default function BookingsClient({ initialBookings, properties }) {
+export default function BookingsClient({ initialBookings, properties, customers = [] }) {
   const [isAdding, setIsAdding] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [amount, setAmount] = useState("");
+
+  // Customer state for auto-fill
+  const [isNewCustomer, setIsNewCustomer] = useState(true);
+  const [customerName, setCustomerName] = useState("");
+  const [customerIdNum, setCustomerIdNum] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+
+  const customerOptions = customers.map(c => ({
+    id: c.customer_id,
+    name: `${c.name} (${c.email || "No Email"} — ${c.phone || "No Phone"})`,
+    original: c
+  }));
+
+  function handleCustomerSelect(opt) {
+    if (!opt) return;
+    const c = opt.original;
+    setCustomerName(c.name || "");
+    setCustomerIdNum(c.identification_number || "");
+    setCustomerPhone(c.phone || "");
+    setCustomerEmail(c.email || "");
+  }
 
   // Multi-segment state
   const [segments, setSegments] = useState([{ start_date: "", end_date: "" }]);
@@ -43,6 +65,11 @@ export default function BookingsClient({ initialBookings, properties }) {
     setSelectedProperty(null);
     setSegments([{ start_date: "", end_date: "" }]);
     setAmount("");
+    setCustomerName("");
+    setCustomerIdNum("");
+    setCustomerPhone("");
+    setCustomerEmail("");
+    setIsNewCustomer(true);
     setErrorMsg("");
   }
 
@@ -113,24 +140,49 @@ export default function BookingsClient({ initialBookings, properties }) {
 
           <form action={handleCreate}>
             {/* Customer */}
-            <h3 className={styles.formSectionTitle}>Customer Details</h3>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+              <h3 className={styles.formSectionTitle} style={{ margin: 0 }}>Customer Details</h3>
+              {customers.length > 0 && (
+                <button type="button" onClick={() => setIsNewCustomer(!isNewCustomer)}
+                  style={{ fontSize: "0.75rem", background: "none", border: "none", color: "#3b82f6", cursor: "pointer", fontWeight: 500 }}>
+                  {isNewCustomer ? "Search Existing Customer" : "Enter Manually"}
+                </button>
+              )}
+            </div>
+
+            {!isNewCustomer && customers.length > 0 && (
+              <div className={styles.formGroup} style={{ marginBottom: "1rem", background: "#f0f9ff", padding: "1rem", borderRadius: "8px", border: "1px dashed #bae6fd" }}>
+                <label className={styles.label} style={{ color: "#0369a1" }}>Find Customer</label>
+                <SearchableSelect 
+                  options={customerOptions}
+                  value={customerName ? `Selected: ${customerName}` : ""}
+                  onChange={handleCustomerSelect}
+                  placeholder="Type name, email, or phone..."
+                />
+              </div>
+            )}
+
             <div className={styles.formGroup}>
               <label className={styles.label}>Full Name</label>
-              <input name="name" className={styles.input} placeholder="John Doe" required />
+              <input name="name" className={styles.input} placeholder="John Doe" required 
+                value={customerName} onChange={e => setCustomerName(e.target.value)} />
             </div>
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>SSN / CNIC / Passport</label>
-                <input name="identificationNumber" className={styles.input} placeholder="Document ID" />
+                <input name="identificationNumber" className={styles.input} placeholder="Document ID" 
+                  value={customerIdNum} onChange={e => setCustomerIdNum(e.target.value)} />
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Phone Number</label>
-                <input name="phone" className={styles.input} placeholder="+1 ..." />
+                <input name="phone" className={styles.input} placeholder="+1 ..." 
+                  value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} />
               </div>
             </div>
             <div className={styles.formGroup}>
               <label className={styles.label}>Email Address</label>
-              <input name="email" type="email" className={styles.input} placeholder="john@example.com" />
+              <input name="email" type="email" className={styles.input} placeholder="john@example.com" 
+                value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} />
             </div>
 
             {/* Booking */}

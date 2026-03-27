@@ -3,14 +3,14 @@
   margin: 0 auto;
   padding: 3rem 2rem;
   font-family: var(--font-geist-sans), sans-serif;
-  color: #18181b; 
+  color: #ffffff;
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: #71717a;
+  color: #a1a1aa;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
@@ -19,7 +19,7 @@
 }
 
 .backLink:hover {
-  color: #18181b;
+  color: #ffffff;
 }
 
 .header {
@@ -39,7 +39,7 @@
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #09090b;
+  color: #ffffff;
   margin: 0;
   line-height: 1.2;
 }
@@ -47,7 +47,7 @@
 .amount {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #10b981; 
+  color: #10b981;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -55,8 +55,10 @@
 
 .badge {
   font-size: 0.75rem;
-  background: #e0e7ff;
-  color: #3730a3;
+  background: rgba(99, 102, 241, 0.12);
+  /* FIX: was #e0e7ff (light indigo) — dark-compatible */
+  color: #818cf8;
+  /* FIX: was #3730a3 (very dark indigo) — unreadable on dark bg */
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-weight: 600;
@@ -68,29 +70,29 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
   padding: 0.75rem 1rem;
-  border: 1px solid #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .statusLabel {
   font-size: 0.8125rem;
-  color: #71717a;
+  color: #a1a1aa;
   font-weight: 500;
 }
 
 .statusSelect {
-  border: 1px solid #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 0.35rem 0.5rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
   outline: none;
   cursor: pointer;
-  background-color: #fafafa;
+  background-color: transparent;
   transition: all 0.2s ease;
 }
 
@@ -99,7 +101,7 @@
 }
 
 .statusSelect:focus {
-  border-color: #18181b;
+  border-color: #ffffff;
   box-shadow: 0 0 0 1px #18181b;
 }
 
@@ -113,6 +115,7 @@
   .grid {
     grid-template-columns: 1fr;
   }
+
   .header {
     flex-direction: column;
     gap: 1.5rem;
@@ -120,22 +123,22 @@
 }
 
 .card {
-  background-color: #ffffff;
-  border: 1px solid #e4e4e7;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .cardTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
   margin: 0 0 1.25rem 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border-bottom: 1px solid #f4f4f5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding-bottom: 0.75rem;
 }
 
@@ -152,12 +155,12 @@
 
 .dataLabel {
   font-size: 0.8125rem;
-  color: #71717a;
+  color: #a1a1aa;
   min-width: 100px;
 }
 
 .dataValue {
   font-size: 0.875rem;
-  color: #18181b;
+  color: #ffffff;
   font-weight: 500;
 }

@@ -10,7 +10,7 @@ export default async function FinancePage() {
   const accounts = await getAllAccounts();
 
   return (
-    <main style={{ backgroundColor: "#fafafa", minHeight: "100vh" }}>
+    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
       <FinanceClient properties={properties} accounts={accounts} />
     </main>
   );

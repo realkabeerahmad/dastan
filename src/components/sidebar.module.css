@@ -1,7 +1,7 @@
 .sidebar {
   width: 260px;
-  background-color: #fafafa;
-  border-right: 1px solid #e4e4e7;
+  background-color: #000000;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   height: 100vh;
   position: fixed;
   top: 0;
@@ -22,7 +22,7 @@
 .logoBadge {
   width: 32px;
   height: 32px;
-  background: #09090b;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
   border-radius: 8px;
   display: flex;
@@ -31,14 +31,23 @@
   font-weight: 800;
   font-size: 1rem;
   flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 .logoName {
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #09090b;
-  letter-spacing: -0.02em;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.logoSlogan {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: #a1a1aa;
   line-height: 1;
 }
 
@@ -64,7 +73,7 @@
   gap: 0.75rem;
   padding: 0.625rem 0.75rem;
   border-radius: 8px;
-  color: #71717a;
+  color: #a1a1aa;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
@@ -72,21 +81,22 @@
 }
 
 .link:hover {
-  background-color: #f4f4f5;
-  color: #18181b;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
 }
 
 .active {
-  background-color: #f4f4f5;
-  color: #18181b;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* User area */
 .userArea {
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid #e4e4e7;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -104,8 +114,8 @@
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #e4e4e7;
-  color: #09090b;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   font-weight: 700;
   font-size: 0.8rem;
   display: flex;
@@ -117,7 +127,7 @@
 .userName {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -142,4 +152,7 @@
   flex-shrink: 0;
 }
 
-.logoutBtn:hover { color: #dc2626; background: #fef2f2; }
+.logoutBtn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}

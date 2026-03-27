@@ -35,9 +35,9 @@ export default function BookingDetailClient({ booking, initialSegments }) {
   // ── Segment editing state ───────────────────────────────────────────────────
   const defaultSegments = initialSegments?.length
     ? initialSegments.map(s => ({
-        start_date: toDateInput(s.start_date),
-        end_date:   toDateInput(s.end_date)
-      }))
+      start_date: toDateInput(s.start_date),
+      end_date: toDateInput(s.end_date)
+    }))
     : [{ start_date: toDateInput(booking.start_date), end_date: toDateInput(booking.end_date) }];
 
   const [isEditingDates, setIsEditingDates] = useState(false);
@@ -212,8 +212,10 @@ export default function BookingDetailClient({ booking, initialSegments }) {
               {!isCancelled && !isEditingDates && (
                 <button
                   onClick={() => setIsEditingDates(true)}
-                  style={{ background: "transparent", border: "none", cursor: "pointer", color: "#71717a",
-                    display: "flex", alignItems: "center", gap: "0.25rem", fontSize: "0.75rem" }}
+                  style={{
+                    background: "transparent", border: "none", cursor: "pointer", color: "#71717a",
+                    display: "flex", alignItems: "center", gap: "0.25rem", fontSize: "0.75rem"
+                  }}
                 >
                   <Edit2 size={12} /> Edit Dates
                 </button>
@@ -221,20 +223,26 @@ export default function BookingDetailClient({ booking, initialSegments }) {
             </div>
 
             {isEditingDates ? (
-              <div style={{ background: "#f9f9f9", padding: "1rem", borderRadius: "8px",
-                border: "1px solid #e4e4e7", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              <div style={{
+                background: "#f9f9f9", padding: "1rem", borderRadius: "8px",
+                border: "1px solid #e4e4e7", display: "flex", flexDirection: "column", gap: "0.75rem"
+              }}>
 
                 {/* Night + rate pill */}
                 {totalNights > 0 && (
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <span style={{ fontSize: "0.75rem", fontWeight: 600, background: "#f0fdf4",
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <span style={{
+                      fontSize: "0.75rem", fontWeight: 600, background: "#f0fdf4",
                       color: "#166534", border: "1px solid #bbf7d0", borderRadius: "99px",
-                      padding: "0.15rem 0.6rem" }}>
+                      padding: "0.15rem 0.6rem"
+                    }}>
                       {totalNights}N{dailyRatePreview ? ` · ${booking.currency_code} ${dailyRatePreview}/night` : ""}
                     </span>
                     {status === "Confirmed" && (
-                      <span style={{ fontSize: "0.7rem", color: "#b45309", background: "#fef3c7",
-                        border: "1px solid #fde68a", borderRadius: "6px", padding: "0.1rem 0.4rem" }}>
+                      <span style={{
+                        fontSize: "0.75rem", color: "#b45309", background: "#fef3c7",
+                        border: "1px solid #fde68a", borderRadius: "6px", padding: "0.25rem 0.5rem"
+                      }}>
                         Will rebuild all {booking.total_nights || "?"} daily transactions
                       </span>
                     )}
@@ -243,44 +251,56 @@ export default function BookingDetailClient({ booking, initialSegments }) {
 
                 {/* Segment rows */}
                 {segments.map((seg, i) => (
-                  <div key={i} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-end" }}>
+                  <div key={i} style={{ display: "flex", gap: "0.5rem", alignItems: "flex-end", flexWrap: "wrap", marginBottom: "0.5rem" }}>
                     <div style={{ flex: 1 }}>
-                      <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 500,
-                        color: "#52525b", marginBottom: "0.25rem" }}>
+                      <label style={{
+                        display: "block", fontSize: "0.75rem", fontWeight: 500,
+                        color: "#52525b", marginBottom: "0.25rem"
+                      }}>
                         Check-in{segments.length > 1 ? ` #${i + 1}` : ""}
                       </label>
                       <input type="date" value={seg.start_date}
                         onChange={e => updateSeg(i, "start_date", e.target.value)}
                         max={seg.end_date || undefined}
-                        style={{ width: "100%", border: "1px solid #e4e4e7", borderRadius: "6px",
+                        style={{
+                          width: "100%", border: "1px solid #e4e4e7", borderRadius: "6px",
                           padding: "0.5rem 0.625rem", fontSize: "0.8125rem", fontFamily: "inherit",
-                          background: "#fff", outline: "none" }} />
+                          background: "#fff", outline: "none", color: "#52525b"
+                        }} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 500,
-                        color: "#52525b", marginBottom: "0.25rem" }}>
+                      <label style={{
+                        display: "block", fontSize: "0.75rem", fontWeight: 500,
+                        color: "#52525b", marginBottom: "0.25rem"
+                      }}>
                         Check-out{segments.length > 1 ? ` #${i + 1}` : ""}
                       </label>
                       <input type="date" value={seg.end_date}
                         onChange={e => updateSeg(i, "end_date", e.target.value)}
                         min={seg.start_date || undefined}
-                        style={{ width: "100%", border: "1px solid #e4e4e7", borderRadius: "6px",
+                        style={{
+                          width: "100%", border: "1px solid #e4e4e7", borderRadius: "6px",
                           padding: "0.5rem 0.625rem", fontSize: "0.8125rem", fontFamily: "inherit",
-                          background: "#fff", outline: "none" }} />
+                          background: "#fff", outline: "none", color: "#52525b"
+                        }} />
                     </div>
                     {segNights(seg) > 0 && (
-                      <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "#166534",
+                      <span style={{
+                        fontSize: "0.7rem", fontWeight: 600, color: "#166534",
                         background: "#f0fdf4", borderRadius: "5px", padding: "0.3rem 0.4rem",
-                        flexShrink: 0, marginBottom: "0.1rem" }}>
+                        flexShrink: 0, marginBottom: "0.1rem"
+                      }}>
                         {segNights(seg)}n
                       </span>
                     )}
                     {segments.length > 1 && (
                       <button onClick={() => removeSegment(i)}
                         title="Remove segment"
-                        style={{ background: "none", border: "none", color: "#a1a1aa", cursor: "pointer",
+                        style={{
+                          background: "none", border: "none", color: "#a1a1aa", cursor: "pointer",
                           padding: "0.3rem", borderRadius: "5px", marginBottom: "0.1rem",
-                          display: "flex", alignItems: "center", flexShrink: 0 }}
+                          display: "flex", alignItems: "center", flexShrink: 0
+                        }}
                         onMouseOver={e => { e.currentTarget.style.color = "#dc2626"; e.currentTarget.style.background = "#fef2f2"; }}
                         onMouseOut={e => { e.currentTarget.style.color = "#a1a1aa"; e.currentTarget.style.background = "none"; }}>
                         <Trash2 size={13} />
@@ -291,31 +311,39 @@ export default function BookingDetailClient({ booking, initialSegments }) {
 
                 {/* Add segment */}
                 <button onClick={addSegment}
-                  style={{ alignSelf: "flex-start", display: "flex", alignItems: "center", gap: "0.35rem",
+                  style={{
+                    alignSelf: "flex-start", display: "flex", alignItems: "center", gap: "0.35rem",
                     background: "none", border: "1px dashed #d4d4d8", borderRadius: "6px", color: "#71717a",
-                    fontSize: "0.75rem", padding: "0.35rem 0.65rem", cursor: "pointer", fontFamily: "inherit" }}>
+                    fontSize: "0.75rem", padding: "0.35rem 0.65rem", cursor: "pointer", fontFamily: "inherit"
+                  }}>
                   <PlusCircle size={12} /> Add date block
                 </button>
 
                 {dateError && (
-                  <div style={{ color: "#ef4444", fontSize: "0.75rem", padding: "0.5rem 0.75rem",
-                    background: "#fef2f2", borderRadius: "6px", border: "1px solid #fca5a5" }}>
+                  <div style={{
+                    color: "#ef4444", fontSize: "0.75rem", padding: "0.5rem 0.75rem",
+                    background: "#fef2f2", borderRadius: "6px", border: "1px solid #fca5a5"
+                  }}>
                     {dateError}
                   </div>
                 )}
 
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem", paddingTop: "0.25rem" }}>
                   <button onClick={cancelEdit} disabled={isPending}
-                    style={{ padding: "0.35rem 0.75rem", border: "1px solid #e4e4e7", background: "#fff",
+                    style={{
+                      padding: "0.35rem 0.75rem", border: "1px solid #e4e4e7", background: "#fff",
                       borderRadius: "6px", fontSize: "0.8125rem", cursor: "pointer", display: "flex",
-                      alignItems: "center", gap: "0.25rem" }}>
+                      alignItems: "center", gap: "0.25rem", color: "#52525b"
+                    }}>
                     <X size={13} /> Cancel
                   </button>
                   <button onClick={saveSegments} disabled={isPending}
-                    style={{ padding: "0.35rem 0.75rem", border: "none", background: "#18181b",
+                    style={{
+                      padding: "0.35rem 0.75rem", border: "none", background: "#18181b",
                       color: "#fff", borderRadius: "6px", fontSize: "0.8125rem", cursor: "pointer",
                       display: "flex", alignItems: "center", gap: "0.25rem",
-                      opacity: isPending ? 0.7 : 1 }}>
+                      opacity: isPending ? 0.7 : 1
+                    }}>
                     <Check size={13} /> {isPending ? "Saving..." : "Save Dates"}
                   </button>
                 </div>
@@ -326,21 +354,29 @@ export default function BookingDetailClient({ booking, initialSegments }) {
                 /* Multi-segment display */
                 <div>
                   {defaultSegments.map((seg, i) => (
-                    <div key={i} style={{ display: "flex", justifyContent: "space-between",
-                      padding: "0.5rem 0", borderBottom: i < defaultSegments.length - 1 ? "1px dashed #f4f4f5" : "none" }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: "0.35rem",
-                        fontSize: "0.8125rem", color: "#52525b" }}>
+                    <div key={i} style={{
+                      display: "flex", justifyContent: "space-between",
+                      padding: "0.5rem 0", borderBottom: i < defaultSegments.length - 1 ? "1px dashed #f4f4f5" : "none"
+                    }}>
+                      <span style={{
+                        display: "flex", alignItems: "center", gap: "0.35rem",
+                        fontSize: "0.8125rem", color: "#52525b"
+                      }}>
                         <Calendar size={13} color="#10b981" />
                         {fmtDate(seg.start_date)}
                       </span>
                       <span style={{ fontSize: "0.7rem", color: "#a1a1aa" }}>→</span>
-                      <span style={{ display: "flex", alignItems: "center", gap: "0.35rem",
-                        fontSize: "0.8125rem", color: "#52525b" }}>
+                      <span style={{
+                        display: "flex", alignItems: "center", gap: "0.35rem",
+                        fontSize: "0.8125rem", color: "#52525b"
+                      }}>
                         <Calendar size={13} color="#ef4444" />
                         {fmtDate(seg.end_date)}
                       </span>
-                      <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "#166534",
-                        background: "#f0fdf4", borderRadius: "4px", padding: "0.1rem 0.35rem" }}>
+                      <span style={{
+                        fontSize: "0.7rem", fontWeight: 600, color: "#166534",
+                        background: "#f0fdf4", borderRadius: "4px", padding: "0.1rem 0.35rem"
+                      }}>
                         {segNights(seg)}N
                       </span>
                     </div>

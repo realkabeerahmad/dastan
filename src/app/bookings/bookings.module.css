@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 2rem 1.5rem;
   font-family: var(--font-geist-sans), sans-serif;
-  color: #18181b; 
+  color: #ffffff;
 }
 
 .header {
@@ -17,13 +17,13 @@
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #09090b;
+  color: #ffffff;
   margin: 0;
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: #71717a;
+  color: #a1a1aa;
   margin-top: 0.25rem;
 }
 
@@ -31,8 +31,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #18181b; 
-  color: #ffffff;
+  background-color: #ffffff;
+  /* FIX: kept white bg */
+  color: #09090b;
+  /* FIX: was #ffffff — white text on white bg was completely invisible */
   border: 1px solid #18181b;
   border-radius: 8px;
   padding: 0.5rem 1rem;
@@ -43,16 +45,23 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.buttonPrimary:hover { background-color: #27272a; }
-.buttonPrimary:disabled { opacity: 0.7; cursor: not-allowed; }
+.buttonPrimary:hover {
+  background-color: #e4e4e7;
+}
+
+/* FIX: was #27272a (dark) — text became unreadable on dark hover */
+.buttonPrimary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
 .buttonSecondary {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #ffffff;
-  color: #18181b;
-  border: 1px solid #e4e4e7;
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -61,7 +70,9 @@
   transition: all 0.2s ease;
 }
 
-.buttonSecondary:hover { background-color: #f4f4f5; }
+.buttonSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
 
 .emptyState {
   display: flex;
@@ -69,15 +80,29 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
-  background-color: #fafafa;
-  border: 1px dashed #e4e4e7;
+  background-color: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   text-align: center;
 }
 
-.emptyIcon { color: #a1a1aa; margin-bottom: 1rem; }
-.emptyText { font-size: 1rem; font-weight: 500; color: #18181b; margin: 0 0 0.25rem 0; }
-.emptySubText { font-size: 0.875rem; color: #71717a; margin: 0; }
+.emptyIcon {
+  color: #a1a1aa;
+  margin-bottom: 1rem;
+}
+
+.emptyText {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+}
+
+.emptySubText {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  margin: 0;
+}
 
 .grid {
   display: grid;
@@ -86,11 +111,11 @@
 }
 
 .card {
-  background-color: #ffffff;
-  border: 1px solid #e4e4e7;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.25rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -100,11 +125,11 @@
 }
 
 .formContainer {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.02);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -112,43 +137,48 @@
 .formHeader {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #f4f4f5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .formSectionTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: #09090b;
+  color: #ffffff;
   margin: 1.5rem 0 1rem 0;
-  border-bottom: 1px dashed #e4e4e7;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
   padding-bottom: 0.5rem;
 }
 
-.formGroup { margin-bottom: 1.25rem; }
+.formGroup {
+  margin-bottom: 1.25rem;
+}
 
 .label {
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #18181b;
+  color: #ffffff;
   margin-bottom: 0.5rem;
 }
 
-.input, .select {
+.input,
+.select {
   width: 100%;
-  border: 1px solid #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 0.625rem 0.75rem;
   font-size: 0.875rem;
-  color: #09090b;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.03);
   transition: all 0.2s ease;
   outline: none;
 }
 
-.input:focus, .select:focus {
-  border-color: #a1a1aa;
-  box-shadow: 0 0 0 2px rgba(244, 244, 245, 1);
+.input:focus,
+.select:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+  /* FIX: was rgba(244,244,245,1) — opaque light ring on dark input */
 }
 
 .formRow {
@@ -163,7 +193,7 @@
   gap: 0.75rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #f4f4f5;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* ── Segment date picker ── */
@@ -172,16 +202,19 @@
   align-items: center;
   justify-content: space-between;
   margin: 1.5rem 0 1rem;
-  border-bottom: 1px dashed #e4e4e7;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
   padding-bottom: 0.5rem;
 }
 
 .nightPill {
   font-size: 0.75rem;
   font-weight: 600;
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  background: rgba(16, 185, 129, 0.12);
+  /* FIX: was #f0fdf4 (light green) — dark-compatible */
+  color: #34d399;
+  /* FIX: was #166534 (dark green) — not readable on dark bg */
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  /* FIX: was #bbf7d0 */
   border-radius: 99px;
   padding: 0.2rem 0.65rem;
   white-space: nowrap;
@@ -197,8 +230,10 @@
 .segmentNights {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #166534;
-  background: #f0fdf4;
+  color: #34d399;
+  /* FIX: was #166534 (dark green) */
+  background: rgba(16, 185, 129, 0.1);
+  /* FIX: was #f0fdf4 (light green) */
   border-radius: 6px;
   padding: 0.4rem 0.5rem;
   min-width: 2.5rem;
@@ -220,22 +255,35 @@
   transition: color 0.15s, background 0.15s;
   margin-bottom: 0.1rem;
 }
-.removeSegBtn:hover { color: #dc2626; background: #fef2f2; }
+
+.removeSegBtn:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* FIX: was #fef2f2 (light red bg) */
 
 .addSegBtn {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   background: none;
-  border: 1px dashed #d4d4d8;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  /* FIX: was #d4d4d8 (light grey) — near-invisible on dark bg */
   border-radius: 7px;
-  color: #71717a;
+  color: #a1a1aa;
   font-family: inherit;
   font-size: 0.8125rem;
   padding: 0.5rem 0.875rem;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
   margin-bottom: 0.5rem;
 }
-.addSegBtn:hover { border-color: #09090b; color: #09090b; }
 
+.addSegBtn:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* FIX: added bg on hover for polish */

@@ -17,7 +17,7 @@ export default async function BookingDetailPage({ params }) {
   if (!booking) notFound();
 
   return (
-    <main style={{ backgroundColor: "#fafafa", minHeight: "100vh" }}>
+    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
       <BookingDetailClient booking={booking} initialSegments={segments} />
     </main>
   );

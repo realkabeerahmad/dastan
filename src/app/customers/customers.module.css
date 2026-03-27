@@ -13,21 +13,24 @@
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #09090b;
+  color: #ffffff;
   margin: 0 0 0.5rem 0;
 }
 
 .subtitle {
-  color: #71717a;
+  color: #a1a1aa;
   font-size: 0.875rem;
   margin: 0;
 }
 
 .errorBox {
   padding: 0.75rem;
-  background: #fef2f2;
-  color: #ef4444;
-  border: 1px solid #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  /* FIX: was #fef2f2 — light red on dark page */
+  color: #f87171;
+  /* FIX: was #ef4444 — use lighter tone readable on dark */
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  /* FIX: was #fca5a5 */
   border-radius: 8px;
   margin-bottom: 1.5rem;
   font-size: 0.875rem;
@@ -40,16 +43,16 @@
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
   transition: box-shadow 0.2s;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .cardHeader {
@@ -62,7 +65,7 @@
 .customerName {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #18181b;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -77,8 +80,8 @@
 }
 
 .editBtn:hover {
-  color: #18181b;
-  background: #f4f4f5;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .infoGrid {
@@ -93,7 +96,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8125rem;
-  color: #52525b;
+  color: #a1a1aa;
 }
 
 .icon {
@@ -103,8 +106,8 @@
 .metricsBox {
   display: flex;
   justify-content: space-between;
-  background: #fafafa;
-  border: 1px solid #f4f4f5;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 0.75rem 1rem;
 }
@@ -126,13 +129,13 @@
 .metricValue {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #18181b;
+  color: #ffffff;
 }
 
 .emptyState {
   text-align: center;
   padding: 4rem 2rem;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px dashed #d4d4d8;
   border-radius: 12px;
 }
@@ -145,13 +148,13 @@
 .emptyText {
   font-size: 1.125rem;
   font-weight: 600;
-  color: #18181b;
+  color: #ffffff;
   margin: 0 0 0.5rem 0;
 }
 
 .emptySubText {
   font-size: 0.875rem;
-  color: #71717a;
+  color: #a1a1aa;
   margin: 0;
 }
 
@@ -171,21 +174,26 @@
 .label {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #52525b;
+  color: #a1a1aa;
 }
 
 .input {
   padding: 0.5rem 0.75rem;
-  border: 1px solid #d4d4d8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  /* FIX: was #d4d4d8 (light grey) — invisible on dark bg */
   border-radius: 6px;
   font-size: 0.8125rem;
   outline: none;
   font-family: inherit;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+  /* FIX: added bg so input is distinguishable */
   transition: border-color 0.2s;
 }
 
 .input:focus {
-  border-color: #09090b;
+  border-color: rgba(255, 255, 255, 0.4);
+  /* FIX: was #ffffff — too harsh; softened */
 }
 
 .formActions {
@@ -195,7 +203,8 @@
   margin-top: 0.5rem;
 }
 
-.buttonPrimary, .buttonSecondary {
+.buttonPrimary,
+.buttonSecondary {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -215,16 +224,16 @@
 
 .buttonPrimary:disabled {
   background: #52525b;
-  border-color: #52525b;
+  border-color: #a1a1aa;
   cursor: not-allowed;
 }
 
 .buttonSecondary {
-  background: #ffffff;
-  color: #09090b;
-  border: 1px solid #e4e4e7;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .buttonSecondary:hover {
-  background: #f4f4f5;
+  background: rgba(255, 255, 255, 0.05);
 }

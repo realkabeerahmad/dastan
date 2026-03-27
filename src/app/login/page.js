@@ -1,10 +1,10 @@
 import LoginClient from "./LoginClient";
 
-export const metadata = { title: "Sign In — Dastan" };
+export const metadata = { title: "Sign In — Mulk" };
 
 export default function LoginPage() {
   return (
-    <main style={{ minHeight: "100vh", backgroundColor: "#fafafa" }}>
+    <main style={{ minHeight: "100vh", backgroundColor: "transparent" }}>
       <LoginClient />
     </main>
   );

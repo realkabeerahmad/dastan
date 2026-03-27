@@ -153,7 +153,7 @@ export async function createBooking(formData) {
 
       const mainAccRes = await client.query(
         `SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1
-         AND (business_id = $2 OR business_id IS NULL) LIMIT 1`,
+         AND business_id = $2 LIMIT 1`,
         [currencyCode, session.businessId]
       );
       if (mainAccRes.rows.length === 0)
@@ -307,7 +307,7 @@ export async function updateBookingStatus(bookingId, newStatus) {
       );
       const mainAccRes = await client.query(
         `SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1
-         AND (business_id = $2 OR business_id IS NULL) LIMIT 1`,
+         AND business_id = $2 LIMIT 1`,
         [currencyCode, session.businessId]
       );
       const propertyAccountSrno = propAccRes.rows[0]?.srno;
@@ -418,7 +418,7 @@ export async function updateBookingSegments(bookingId, segments) {
         );
         const mainAccRes = await client.query(
           `SELECT srno FROM accounts WHERE account_type = 'Main' AND currency_code = $1
-           AND (business_id = $2 OR business_id IS NULL) LIMIT 1`,
+           AND business_id = $2 LIMIT 1`,
           [booking.currency_code, session.businessId]
         );
         const propertyAccountSrno = propAccRes.rows[0]?.srno;

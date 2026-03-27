@@ -12,14 +12,14 @@ export default function Sidebar({ session }) {
   const [isPending, startTransition] = useTransition();
 
   const links = [
-    { name: "Dashboard",     href: "/",             icon: LayoutDashboard },
-    { name: "Properties",    href: "/properties",   icon: Building },
-    { name: "Bookings",      href: "/bookings",     icon: Calendar },
-    { name: "Finance",       href: "/finance",      icon: Wallet },
-    { name: "Customers",     href: "/customers",    icon: Users },
-    { name: "Transactions",  href: "/transactions", icon: List },
-    { name: "Team",          href: "/users",        icon: UserCog },
-    { name: "Settings",      href: "/settings",     icon: Settings },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Properties", href: "/properties", icon: Building },
+    { name: "Bookings", href: "/bookings", icon: Calendar },
+    { name: "Finance", href: "/finance", icon: Wallet },
+    { name: "Customers", href: "/customers", icon: Users },
+    { name: "Transactions", href: "/transactions", icon: List },
+    { name: "Team", href: "/users", icon: UserCog },
+    { name: "Settings", href: "/settings", icon: Settings },
   ];
 
   function handleLogout() {
@@ -29,12 +29,10 @@ export default function Sidebar({ session }) {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logo}>
-        <div className={styles.logoBadge}>D</div>
+        {/* <div className={styles.logoBadge}>BMS</div> */}
         <div>
-          <div className={styles.logoName}>Dastan</div>
-          {session?.businessName && (
-            <div className={styles.businessName}>{session.businessName}</div>
-          )}
+          <div className={styles.logoName}>Mulk</div>
+          <div className={styles.logoSlogan}>Manage renting portfolios</div>
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import Link from "next/link";
 import { registerBusiness } from "@/actions/auth-actions";
 import styles from "../login/auth.module.css";
-import { Building, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function RegisterClient() {
   const [error, setError] = useState("");
@@ -24,8 +24,12 @@ export default function RegisterClient() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.logoArea}>
-          <div className={styles.logoIcon}><Building size={22} /></div>
-          <h1 className={styles.appName}>Dastan</h1>
+          <Link href='/'>
+            <div>
+              <h1 className={styles.appName}>Mulk</h1>
+              <div className={styles.appSlogan}>Manage renting portfolios</div>
+            </div>
+          </Link>
         </div>
         <h2 className={styles.heading}>Create your business account</h2>
         <p className={styles.sub}>One account unlocks your entire property portfolio.</p>
@@ -45,17 +49,14 @@ export default function RegisterClient() {
             <label className={styles.label}>Email Address</label>
             <input name="email" type="email" className={styles.input} placeholder="you@business.com" required />
           </div>
-          <div className={styles.row}>
-            <div className={styles.group}>
-              <label className={styles.label}>Password</label>
-              <input name="password" type="password" className={styles.input} placeholder="Min. 8 characters" required />
-            </div>
-            <div className={styles.group}>
-              <label className={styles.label}>Confirm Password</label>
-              <input name="confirmPassword" type="password" className={styles.input} placeholder="Repeat password" required />
-            </div>
+          <div className={styles.group}>
+            <label className={styles.label}>Password</label>
+            <input name="password" type="password" className={styles.input} placeholder="Min. 8 characters" required />
           </div>
-
+          <div className={styles.group}>
+            <label className={styles.label}>Confirm Password</label>
+            <input name="confirmPassword" type="password" className={styles.input} placeholder="Repeat password" required />
+          </div>
           <button type="submit" className={styles.btn} disabled={isPending}>
             {isPending ? <Loader2 size={16} className="animate-spin" /> : null}
             Create Business Account

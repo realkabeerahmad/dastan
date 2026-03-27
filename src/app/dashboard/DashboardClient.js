@@ -261,7 +261,7 @@ export default function DashboardClient({ data }) {
                         <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255, 255, 255, 0.08)" />
                     <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dy={8} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dx={-8} tickFormatter={v => `$${v}`} />
                     <Tooltip content={<CustomTooltip prefix="$" />} />
@@ -287,11 +287,11 @@ export default function DashboardClient({ data }) {
               <div className={styles.chartBody}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={propUSD} barSize={14} margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255, 255, 255, 0.08)" />
                     <XAxis dataKey="property_name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dy={8} />
                     <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dx={-8} tickFormatter={v => `$${v}`} />
-                    <Tooltip cursor={{ fill: '#f9fafb' }} content={<CustomTooltip prefix="$" />} />
-                    <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', paddingTop: '16px', color: '#71717a' }} />
+                    <Tooltip cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} content={<CustomTooltip prefix="$" />} />
+                    <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', paddingTop: '16px', color: '#a1a1aa' }} />
                     <Bar dataKey="income" name="Income" fill="#10b981" radius={[3, 3, 0, 0]} />
                     <Bar dataKey="expense" name="Expense" fill="#ef4444" radius={[3, 3, 0, 0]} />
                     <Bar dataKey="profit" name="Net Profit" fill="#3b82f6" radius={[3, 3, 0, 0]} />
@@ -329,8 +329,8 @@ export default function DashboardClient({ data }) {
                         <Cell key={i} fill={STATUS_COLORS[entry.name] || PIE_COLORS[i]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(val) => [`${val} bookings`, '']} contentStyle={{ borderRadius: '8px', border: '1px solid #e4e4e7', fontSize: '12px' }} />
-                    <Legend iconType="circle" verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '12px', color: '#52525b' }} />
+                    <Tooltip formatter={(val) => [`${val} bookings`, '']} contentStyle={{ borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', backgroundColor: '#050505', color: '#ededed', fontSize: '12px' }} />
+                    <Legend iconType="circle" verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '12px', color: '#a1a1aa' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>

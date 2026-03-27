@@ -1,13 +1,15 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
+  /* FIX: Removed conflicting --foreground:#fff and --text-primary:#000 that fought globals.css.
+     Light-mode tokens now explicitly defined; dark-mode overrides live in the media query below. */
+  --background: transparent;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
 
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
+  --button-primary-bg: #09090b;
+  --button-primary-fg: #ffffff;
+  --button-primary-hover: #27272a;
+  --button-secondary-hover: #f4f4f5;
+  --button-secondary-border: #e4e4e7;
 
   display: flex;
   flex: 1;
@@ -26,7 +28,9 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  background-color: var(--foreground);
+  background-color: transparent;
+  /* FIX: was var(--foreground) which resolved to #fff in light and #000 in dark —
+                                     this made .main an opaque colour block instead of inheriting the page bg */
   padding: 120px 60px;
 }
 
@@ -78,20 +82,22 @@
   padding: 0 16px;
   border-radius: 128px;
   border: 1px solid transparent;
-  transition: 0.2s;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
   cursor: pointer;
   width: fit-content;
   font-weight: 500;
 }
 
 a.primary {
-  background: var(--text-primary);
-  color: var(--background);
+  background: var(--button-primary-bg);
+  color: var(--button-primary-fg);
   gap: 8px;
 }
 
 a.secondary {
   border-color: var(--button-secondary-border);
+  color: var(--text-primary);
+  /* FIX: secondary had no explicit color — inherited inconsistently */
 }
 
 /* Enable hover only on non-touch devices */
@@ -128,15 +134,17 @@ a.secondary {
     filter: invert();
   }
 
+  /* FIX: dark overrides now only touch what needs to change; no longer re-declaring --foreground
+     which was being (mis)used as a background-color on .main */
   .page {
-    --background: #000;
-    --foreground: #000;
-
     --text-primary: #ededed;
-    --text-secondary: #999;
+    --text-secondary: #a1a1aa;
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+    --button-primary-bg: #ffffff;
+    --button-primary-fg: #09090b;
+    /* FIX: was --background (#000) — kept readable regardless of page bg */
+    --button-primary-hover: #e4e4e7;
+    --button-secondary-hover: rgba(255, 255, 255, 0.06);
+    --button-secondary-border: rgba(255, 255, 255, 0.12);
   }
 }
