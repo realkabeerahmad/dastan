@@ -3,8 +3,7 @@
   margin: 0 auto;
   padding: 2rem 1.5rem;
   font-family: var(--font-geist-sans), sans-serif;
-  color: #ffffff;
-  /* zinc-900 */
+  color: #ffffff; /* zinc-900 */
 }
 
 /* Header */
@@ -19,15 +18,13 @@
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #ffffff;
-  /* zinc-950 */
+  color: #ffffff; /* zinc-950 */
   margin: 0;
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: #a1a1aa;
-  /* zinc-500 */
+  color: #a1a1aa; /* zinc-500 */
   margin-top: 0.25rem;
 }
 
@@ -37,8 +34,7 @@
   align-items: center;
   gap: 0.5rem;
   background-color: #ffffff;
-  color: #09090b;
-  /* FIX: was #ffffff — white text on white background was completely invisible */
+  color: #09090b; /* FIX: was #ffffff — white text on white background was completely invisible */
   border: 1px solid #18181b;
   border-radius: 8px;
   padding: 0.5rem 1rem;
@@ -50,8 +46,7 @@
 }
 
 .buttonPrimary:hover {
-  background-color: #e4e4e7;
-  /* FIX: was #27272a (dark) — text became unreadable on hover */
+  background-color: #e4e4e7; /* FIX: was #27272a (dark) — text became unreadable on hover */
 }
 
 .buttonPrimary:disabled {
@@ -65,8 +60,7 @@
   gap: 0.5rem;
   background-color: rgba(255, 255, 255, 0.03);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  /* zinc-200 */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* zinc-200 */
   border-radius: 8px;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -76,8 +70,7 @@
 }
 
 .buttonSecondary:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  /* zinc-100 */
+  background-color: rgba(255, 255, 255, 0.05); /* zinc-100 */
 }
 
 /* States */
@@ -87,32 +80,27 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
-  background-color: transparent;
-  /* zinc-50 */
-  border: 1px dashed rgba(255, 255, 255, 0.08);
-  /* zinc-200 */
+  background-color: transparent; /* zinc-50 */
+  border: 1px dashed rgba(255, 255, 255, 0.08); /* zinc-200 */
   border-radius: 12px;
   text-align: center;
 }
 
 .emptyIcon {
-  color: #a1a1aa;
-  /* zinc-400 */
+  color: #a1a1aa; /* zinc-400 */
   margin-bottom: 1rem;
 }
 
 .emptyText {
   font-size: 1rem;
   font-weight: 500;
-  color: #ffffff;
-  /* zinc-900 */
+  color: #ffffff; /* zinc-900 */
   margin: 0 0 0.25rem 0;
 }
 
 .emptySubText {
   font-size: 0.875rem;
-  color: #a1a1aa;
-  /* zinc-500 */
+  color: #a1a1aa; /* zinc-500 */
   margin: 0;
 }
 
@@ -125,11 +113,10 @@
 
 .card {
   background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  /* zinc-200 */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* zinc-200 */
   border-radius: 12px;
   padding: 1.25rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -146,10 +133,8 @@
 }
 
 .cardIcon {
-  color: #a1a1aa;
-  /* zinc-500 */
-  background: rgba(255, 255, 255, 0.05);
-  /* zinc-100 */
+  color: #a1a1aa; /* zinc-500 */
+  background: rgba(255, 255, 255, 0.05); /* zinc-100 */
   padding: 0.5rem;
   border-radius: 8px;
 }
@@ -157,15 +142,13 @@
 .propertyName {
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
-  /* zinc-900 */
+  color: #ffffff; /* zinc-900 */
   margin: 0 0 0.25rem 0;
 }
 
 .propertyAddress {
   font-size: 0.8125rem;
-  color: #a1a1aa;
-  /* zinc-500 */
+  color: #a1a1aa; /* zinc-500 */
   margin: 0;
   line-height: 1.4;
 }
@@ -173,24 +156,21 @@
 .cardFooter {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  /* zinc-100 */
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* zinc-100 */
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.75rem;
-  color: #a1a1aa;
-  /* zinc-400 */
+  color: #a1a1aa; /* zinc-400 */
 }
 
 /* Form Layout */
 .formContainer {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  /* zinc-200 */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* zinc-200 */
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.02);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -198,8 +178,7 @@
 .formHeader {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  /* zinc-100 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* zinc-100 */
 }
 
 .formGroup {
@@ -210,30 +189,25 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #ffffff;
-  /* zinc-900 */
+  color: #ffffff; /* zinc-900 */
   margin-bottom: 0.5rem;
 }
 
 .input {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  /* zinc-200 */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* zinc-200 */
   border-radius: 8px;
   padding: 0.625rem 0.75rem;
   font-size: 0.875rem;
-  color: #ffffff;
-  /* zinc-950 */
+  color: #ffffff; /* zinc-950 */
   transition: all 0.2s ease;
   outline: none;
   background-color: rgba(255, 255, 255, 0.03);
 }
 
 .input:focus {
-  border-color: rgba(255, 255, 255, 0.4);
-  /* FIX: was #a1a1aa — subtle but visible on dark */
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
-  /* FIX: was opaque zinc-100 — would show as white block on dark bg */
+  border-color: rgba(255, 255, 255, 0.4); /* FIX: was #a1a1aa — subtle but visible on dark */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08); /* FIX: was opaque zinc-100 — would show as white block on dark bg */
 }
 
 .formRow {
@@ -248,6 +222,115 @@
   gap: 0.75rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  /* zinc-100 */
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* zinc-100 */
+}
+
+/* ── Classes extracted from inline styles in ManagePropertiesClient ── */
+
+/* Back button — replaces inline style={{ padding, marginBottom }} */
+.backBtn {
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Form heading inside form container */
+.formHeading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 1rem;
+}
+
+/* Empty state CTA spacing */
+.emptyAction { margin-top: 1.5rem; }
+
+/* Error box inside form — FIX: was inline color:"#ef4444" only, no background */
+.errorBox {
+  color: #f87171;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* Card info column */
+.cardInfo { flex: 1; min-width: 0; }
+
+/* Property address row — FIX: was inline style color:"#71717a" */
+.propertyAddressRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+.addressIcon {
+  color: #71717a;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.addressText {
+  font-size: 0.8125rem;
+  color: #a1a1aa;
+}
+
+/* Type/status tag row */
+.propTags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Card actions (edit button + icon) */
+.cardActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* Accounts section — FIX: was inline border-top:"1px solid #f4f4f5" (light separator on dark card) */
+.accountsSection {
+  margin-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 1rem;
+}
+
+/* Individual account row */
+.accountRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+.accountRow:last-child { margin-bottom: 0; }
+
+/* FIX: was inline color:"#18181b", fontWeight:600 — dark text invisible on dark card */
+.accountCurrency {
+  font-weight: 600;
+  color: #ffffff;
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.accountFigures {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* FIX: was inline color:"#71717a" for labels */
+.accountFigure { color: #71717a; }
+
+/* FIX: was inline color:"#18181b" — invisible; use light token */
+.accountValue {
+  color: #d4d4d8;
+  font-weight: 500;
+}
+
+/* FIX: profit value was also color:"#10b981" but via inline — now CSS */
+.accountProfit {
+  color: #10b981;
+  font-weight: 600;
 }

@@ -1,14 +1,8 @@
 import { getDashboardAnalytics } from "@/actions/analytics-actions";
 import DashboardClient from "./DashboardClient";
-
-export const metadata = { title: "Dastan Dashboard" };
-
+/* FIX: metadata title was "Dastan Dashboard" — standardised to "Mulk" */
+export const metadata = { title: "Dashboard — Mulk" };
 export default async function DashboardPage() {
   const analytics = await getDashboardAnalytics();
-
-  return (
-    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
-      <DashboardClient data={analytics} />
-    </main>
-  );
+  return <main><DashboardClient data={analytics} /></main>;
 }

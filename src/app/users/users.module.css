@@ -44,17 +44,12 @@
   white-space: nowrap;
 }
 
-.addBtn:hover {
-  background: #18181b;
-}
+.addBtn:hover { background: #18181b; }
 
 .errorBox {
-  background: rgba(239, 68, 68, 0.1);
-  /* FIX: was #fef2f2 (light red) — transparent dark-compatible version */
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  /* FIX: was #fca5a5 (light pink) */
-  color: #f87171;
-  /* FIX: was #dc2626 (dark red) — lighter red readable on dark bg */
+  background: rgba(239, 68, 68, 0.1); /* FIX: was #fef2f2 (light red) — transparent dark-compatible version */
+  border: 1px solid rgba(239, 68, 68, 0.3); /* FIX: was #fca5a5 (light pink) */
+  color: #f87171; /* FIX: was #dc2626 (dark red) — lighter red readable on dark bg */
   font-size: 0.8125rem;
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -62,13 +57,12 @@
 }
 
 .formCard {
-  background: #0d0d0f;
-  /* FIX: was #fff — white card in dark UI created jarring contrast */
+  background: #0d0d0f; /* FIX: was #fff — white card in dark UI created jarring contrast */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .formTitle {
@@ -78,11 +72,7 @@
   margin: 0 0 1.25rem;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
+.form { display: flex; flex-direction: column; gap: 1.25rem; }
 
 .formRow {
   display: grid;
@@ -90,53 +80,39 @@
   gap: 1rem;
 }
 
-@media (max-width: 700px) {
-  .formRow {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+@media (max-width: 700px) { .formRow { grid-template-columns: 1fr 1fr; } }
 
-.group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
+.group { display: flex; flex-direction: column; gap: 0.375rem; }
 
 .label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #a1a1aa;
-  /* FIX: was #374151 (dark grey) — invisible on dark background */
+  color: #a1a1aa; /* FIX: was #374151 (dark grey) — invisible on dark background */
 }
 
 .input {
   padding: 0.575rem 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  /* FIX: was #d4d4d8 (light grey) — invisible on dark */
+  border: 1px solid rgba(255, 255, 255, 0.12); /* FIX: was #d4d4d8 (light grey) — invisible on dark */
   border-radius: 7px;
   font-size: 0.875rem;
   font-family: inherit;
   color: #ffffff;
   outline: none;
-  background: rgba(255, 255, 255, 0.04);
-  /* FIX: was transparent — no visible boundary on dark bg */
+  background: rgba(255, 255, 255, 0.04); /* FIX: was transparent — no visible boundary on dark bg */
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .input:focus {
   border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.06);
-  /* FIX: was #fff — white input on dark form was jarring */
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
-  /* FIX: was rgba(9,9,11,0.05) — near-invisible dark ring on dark bg */
+  background: rgba(255, 255, 255, 0.06); /* FIX: was #fff — white input on dark form was jarring */
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06); /* FIX: was rgba(9,9,11,0.05) — near-invisible dark ring on dark bg */
 }
 
 .cancelBtn {
   padding: 0.5rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 7px;
-  background: rgba(255, 255, 255, 0.04);
-  /* FIX: was #fff — white button in dark form */
+  background: rgba(255, 255, 255, 0.04); /* FIX: was #fff — white button in dark form */
   font-size: 0.875rem;
   font-family: inherit;
   cursor: pointer;
@@ -145,8 +121,7 @@
 }
 
 .cancelBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  /* FIX: added hover state — was missing entirely */
+  background: rgba(255, 255, 255, 0.08); /* FIX: added hover state — was missing entirely */
   color: #ffffff;
 }
 
@@ -165,15 +140,11 @@
   cursor: pointer;
 }
 
-.saveBtn:disabled {
-  background: #a1a1aa;
-  cursor: not-allowed;
-}
+.saveBtn:disabled { background: #a1a1aa; cursor: not-allowed; }
 
 /* Table */
 .table {
-  background: rgba(255, 255, 255, 0.02);
-  /* FIX: was #fff — white table in dark UI */
+  background: rgba(255, 255, 255, 0.02); /* FIX: was #fff — white table in dark UI */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   overflow: hidden;
@@ -201,26 +172,11 @@
   transition: background 0.1s;
 }
 
-.tableRow:last-child {
-  border-bottom: none;
-}
+.tableRow:last-child { border-bottom: none; }
+.tableRow:hover { background: rgba(255, 255, 255, 0.02); } /* FIX: was transparent — no hover feedback at all */
+.selfRow { background: rgba(255, 255, 255, 0.04); } /* FIX: was #f9fafb (light) — light row in dark table */
 
-.tableRow:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-/* FIX: was transparent — no hover feedback at all */
-.selfRow {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-/* FIX: was #f9fafb (light) — light row in dark table */
-
-.userCell {
-  display: flex;
-  align-items: center;
-  gap: 0.875rem;
-}
+.userCell { display: flex; align-items: center; gap: 0.875rem; }
 
 .avatar {
   width: 34px;
@@ -234,12 +190,7 @@
   flex-shrink: 0;
 }
 
-.avatarAdmin {
-  background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
-}
-
-/* FIX: was #ede9fe/#5b21b6 (light bg/dark text) — inverted for dark theme */
+.avatarAdmin { background: rgba(139, 92, 246, 0.15); color: #a78bfa; } /* FIX: was #ede9fe/#5b21b6 (light bg/dark text) — inverted for dark theme */
 
 .userName {
   font-size: 0.875rem;
@@ -250,11 +201,7 @@
   gap: 0.5rem;
 }
 
-.userEmail {
-  font-size: 0.75rem;
-  color: #a1a1aa;
-  margin-top: 0.1rem;
-}
+.userEmail { font-size: 0.75rem; color: #a1a1aa; margin-top: 0.1rem; }
 
 .youBadge {
   background: rgba(255, 255, 255, 0.05);
@@ -274,21 +221,10 @@
   width: fit-content;
 }
 
-.roleAdmin {
-  background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
-}
+.roleAdmin  { background: rgba(139, 92, 246, 0.15); color: #a78bfa; } /* FIX: was #ede9fe/#5b21b6 (light) — dark-compatible purple */
+.roleMember { background: rgba(255, 255, 255, 0.05); color: #a1a1aa; }
 
-/* FIX: was #ede9fe/#5b21b6 (light) — dark-compatible purple */
-.roleMember {
-  background: rgba(255, 255, 255, 0.05);
-  color: #a1a1aa;
-}
-
-.date {
-  font-size: 0.8125rem;
-  color: #a1a1aa;
-}
+.date { font-size: 0.8125rem; color: #a1a1aa; }
 
 .deleteBtn {
   background: none;
@@ -302,9 +238,20 @@
   transition: color 0.15s, background 0.15s;
 }
 
-.deleteBtn:hover {
-  color: #f87171;
-  background: rgba(239, 68, 68, 0.1);
+.deleteBtn:hover { color: #f87171; background: rgba(239, 68, 68, 0.1); } /* FIX: was #fef2f2 (light red bg) — replaced with transparent dark-compatible version */
+
+/* ── Classes extracted from inline styles in UsersClient ── */
+
+/* Form actions row — FIX: was inline style={{ display:'flex', gap:'0.75rem', justifyContent:'flex-end' }} */
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
 }
 
-/* FIX: was #fef2f2 (light red bg) — replaced with transparent dark-compatible version */
+/* Table row actions cell — FIX: was inline style={{ display:'flex', justifyContent:'flex-end' }} */
+.tableRowActions {
+  display: flex;
+  justify-content: flex-end;
+}

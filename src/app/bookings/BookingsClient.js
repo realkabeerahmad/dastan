@@ -6,6 +6,9 @@ import { Plus, Calendar, Loader2, ArrowLeft, User, Building, Trash2, PlusCircle 
 import styles from "./bookings.module.css";
 import { createBooking } from "@/actions/booking-actions";
 import SearchableSelect from "@/components/ui/SearchableSelect";
+import StatusBadge from "@/components/ui/StatusBadge";
+import MetaBadge from "@/components/ui/MetaBadge";
+import { formatDate } from "@/lib/dateUtils";
 
 export default function BookingsClient({ initialBookings, properties, customers = [] }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -14,17 +17,16 @@ export default function BookingsClient({ initialBookings, properties, customers 
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [amount, setAmount] = useState("");
 
-  // Customer state for auto-fill
   const [isNewCustomer, setIsNewCustomer] = useState(true);
   const [customerName, setCustomerName] = useState("");
   const [customerIdNum, setCustomerIdNum] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
 
-  const customerOptions = customers.map(c => ({
+  const customerOptions = customers.map((c) => ({
     id: c.customer_id,
     name: `${c.name} (${c.email || "No Email"} — ${c.phone || "No Phone"})`,
-    original: c
+    original: c,
   }));
 
   function handleCustomerSelect(opt) {
@@ -36,12 +38,9 @@ export default function BookingsClient({ initialBookings, properties, customers 
     setCustomerEmail(c.email || "");
   }
 
-  // Multi-segment state
   const [segments, setSegments] = useState([{ start_date: "", end_date: "" }]);
+  const propertyOptions = properties.map((p) => ({ id: p.property_id, name: p.property_name }));
 
-  const propertyOptions = properties.map(p => ({ id: p.property_id, name: p.property_name }));
-
-  // Total nights inclusive (end - start + 1 per segment)
   const totalNights = segments.reduce((acc, seg) => {
     if (!seg.start_date || !seg.end_date) return acc;
     const s = new Date(seg.start_date + "T00:00:00Z");
@@ -50,14 +49,22 @@ export default function BookingsClient({ initialBookings, properties, customers 
     return acc + Math.floor((e - s) / 86400000) + 1;
   }, 0);
 
-  const dailyRate = amount && totalNights > 0
-    ? (parseFloat(amount) / totalNights).toFixed(2)
-    : null;
+  const dailyRate =
+    amount && totalNights > 0
+      ? (parseFloat(amount) / totalNights).toFixed(2)
+      : null;
 
-  function addSegment() { setSegments(s => [...s, { start_date: "", end_date: "" }]); }
-  function removeSegment(i) { setSegments(s => s.filter((_, idx) => idx !== i)); }
+  function addSegment() { setSegments((s) => [...s, { start_date: "", end_date: "" }]); }
+  function removeSegment(i) { setSegments((s) => s.filter((_, idx) => idx !== i)); }
   function updateSegment(i, field, val) {
-    setSegments(s => s.map((seg, idx) => idx === i ? { ...seg, [field]: val } : seg));
+    setSegments((s) => s.map((seg, idx) => (idx === i ? { ...seg, [field]: val } : seg)));
+  }
+
+  function segNights(seg) {
+    if (!seg.start_date || !seg.end_date) return 0;
+    const s = new Date(seg.start_date + "T00:00:00Z");
+    const e = new Date(seg.end_date + "T00:00:00Z");
+    return Math.max(0, Math.floor((e - s) / 86400000) + 1);
   }
 
   function resetForm() {
@@ -75,7 +82,7 @@ export default function BookingsClient({ initialBookings, properties, customers 
 
   async function handleCreate(formData) {
     setErrorMsg("");
-    if (segments.some(s => !s.start_date || !s.end_date))
+    if (segments.some((s) => !s.start_date || !s.end_date))
       return setErrorMsg("All date segments must have a start and end date.");
     if (totalNights === 0)
       return setErrorMsg("Date segments produce zero nights — check your dates.");
@@ -87,38 +94,15 @@ export default function BookingsClient({ initialBookings, properties, customers 
     });
   }
 
-  function renderStatusBadge(status) {
-    let color = "#18181b", bg = "#f4f4f5";
-    if (status === "Confirmed") { color = "#166534"; bg = "#dcfce7"; }
-    else if (status === "Pending") { color = "#b45309"; bg = "#fef3c7"; }
-    else if (status === "Cancelled") { color = "#991b1b"; bg = "#fee2e2"; }
-    return (
-      <span style={{ fontSize: "0.75rem", fontWeight: 500, color, background: bg,
-        padding: "0.25rem 0.5rem", borderRadius: "12px" }}>
-        {status}
-      </span>
-    );
-  }
-
-  function formatDate(dateString) {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-  }
-
-  function segNights(seg) {
-    if (!seg.start_date || !seg.end_date) return 0;
-    const s = new Date(seg.start_date + "T00:00:00Z");
-    const e = new Date(seg.end_date + "T00:00:00Z");
-    return Math.max(0, Math.floor((e - s) / 86400000) + 1);
-  }
-
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div>
           <h1 className={styles.title}>Manage Bookings</h1>
           <p className={styles.subtitle}>
-            {isAdding ? "Create a new booking." : "Track your guest bookings and transactions."}
+            {isAdding
+              ? "Create a new booking."
+              : "Track your guest bookings and transactions."}
           </p>
         </div>
         {!isAdding && (
@@ -131,29 +115,36 @@ export default function BookingsClient({ initialBookings, properties, customers 
       {isAdding ? (
         <div className={styles.formContainer}>
           <div className={styles.formHeader}>
-            <button onClick={resetForm} className={styles.buttonSecondary}
-              style={{ padding: "0.25rem 0.5rem", marginBottom: "1rem" }}>
+            {/* FIX: removed inline style={{ padding, marginBottom }} — use CSS class modifier instead */}
+            <button onClick={resetForm} className={`${styles.buttonSecondary} ${styles.backBtn}`}>
               <ArrowLeft size={16} /> Back
             </button>
-            <h2 className={styles.title} style={{ fontSize: "1.25rem" }}>New Booking</h2>
+            <h2 className={styles.formTitle}>New Booking</h2>
           </div>
 
           <form action={handleCreate}>
-            {/* Customer */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <h3 className={styles.formSectionTitle} style={{ margin: 0 }}>Customer Details</h3>
+            {/* ── Customer section ── */}
+            <div className={styles.sectionTitleRow}>
+              <h3 className={styles.formSectionTitle}>Customer Details</h3>
               {customers.length > 0 && (
-                <button type="button" onClick={() => setIsNewCustomer(!isNewCustomer)}
-                  style={{ fontSize: "0.75rem", background: "none", border: "none", color: "#3b82f6", cursor: "pointer", fontWeight: 500 }}>
+                /* FIX: was inline style={{ fontSize, background, border, color, cursor, fontWeight }}
+                   Now uses a CSS class */
+                <button
+                  type="button"
+                  onClick={() => setIsNewCustomer(!isNewCustomer)}
+                  className={styles.toggleCustomerBtn}
+                >
                   {isNewCustomer ? "Search Existing Customer" : "Enter Manually"}
                 </button>
               )}
             </div>
 
             {!isNewCustomer && customers.length > 0 && (
-              <div className={styles.formGroup} style={{ marginBottom: "1rem", background: "#f0f9ff", padding: "1rem", borderRadius: "8px", border: "1px dashed #bae6fd" }}>
-                <label className={styles.label} style={{ color: "#0369a1" }}>Find Customer</label>
-                <SearchableSelect 
+              /* FIX: was inline style with background:"#f0f9ff", border:"1px dashed #bae6fd", color:"#0369a1"
+                 — light blue panel visible on dark form. Now uses CSS class. */
+              <div className={`${styles.formGroup} ${styles.customerSearchPanel}`}>
+                <label className={styles.label}>Find Customer</label>
+                <SearchableSelect
                   options={customerOptions}
                   value={customerName ? `Selected: ${customerName}` : ""}
                   onChange={handleCustomerSelect}
@@ -164,43 +155,78 @@ export default function BookingsClient({ initialBookings, properties, customers 
 
             <div className={styles.formGroup}>
               <label className={styles.label}>Full Name</label>
-              <input name="name" className={styles.input} placeholder="John Doe" required 
-                value={customerName} onChange={e => setCustomerName(e.target.value)} />
+              <input
+                name="name"
+                className={styles.input}
+                placeholder="John Doe"
+                required
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
             </div>
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>SSN / CNIC / Passport</label>
-                <input name="identificationNumber" className={styles.input} placeholder="Document ID" 
-                  value={customerIdNum} onChange={e => setCustomerIdNum(e.target.value)} />
+                <input
+                  name="identificationNumber"
+                  className={styles.input}
+                  placeholder="Document ID"
+                  value={customerIdNum}
+                  onChange={(e) => setCustomerIdNum(e.target.value)}
+                />
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Phone Number</label>
-                <input name="phone" className={styles.input} placeholder="+1 ..." 
-                  value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} />
+                <input
+                  name="phone"
+                  className={styles.input}
+                  placeholder="+1 ..."
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                />
               </div>
             </div>
             <div className={styles.formGroup}>
               <label className={styles.label}>Email Address</label>
-              <input name="email" type="email" className={styles.input} placeholder="john@example.com" 
-                value={customerEmail} onChange={e => setCustomerEmail(e.target.value)} />
+              <input
+                name="email"
+                type="email"
+                className={styles.input}
+                placeholder="john@example.com"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+              />
             </div>
 
-            {/* Booking */}
+            {/* ── Booking details ── */}
             <h3 className={styles.formSectionTitle}>Booking Details</h3>
             <div className={styles.formGroup}>
               <label className={styles.label}>Select Property</label>
-              <SearchableSelect name="propertyId" options={propertyOptions}
+              <SearchableSelect
+                name="propertyId"
+                options={propertyOptions}
                 value={selectedProperty?.name || ""}
-                onChange={opt => setSelectedProperty(opt)}
-                placeholder="Search Property" submitId={true} required />
+                onChange={(opt) => setSelectedProperty(opt)}
+                placeholder="Search Property"
+                submitId={true}
+                required
+              />
             </div>
 
             <div className={styles.formRow}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Total Booking Amount</label>
-                <input name="amount" type="number" step="0.01" min="0" className={styles.input}
-                  placeholder="0.00" value={amount}
-                  onChange={e => setAmount(e.target.value)} required />
+                <input
+                  name="amount"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  className={styles.input}
+                  placeholder="0.00"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Currency</label>
@@ -211,9 +237,9 @@ export default function BookingsClient({ initialBookings, properties, customers 
               </div>
             </div>
 
-            {/* Stay segments */}
+            {/* ── Stay segments ── */}
             <div className={styles.segmentHeader}>
-              <h3 className={styles.formSectionTitle} style={{ margin: 0 }}>Stay Dates</h3>
+              <h3 className={`${styles.formSectionTitle} ${styles.noMargin}`}>Stay Dates</h3>
               {totalNights > 0 && (
                 <div className={styles.nightPill}>
                   {totalNights} night{totalNights !== 1 ? "s" : ""}
@@ -224,30 +250,40 @@ export default function BookingsClient({ initialBookings, properties, customers 
 
             {segments.map((seg, i) => (
               <div key={i} className={styles.segmentRow}>
-                <div className={styles.formGroup} style={{ flex: 1 }}>
+                <div className={`${styles.formGroup} ${styles.segmentField}`}>
                   <label className={styles.label}>
                     Check-in{segments.length > 1 ? ` #${i + 1}` : ""}
                   </label>
-                  <input type="date" className={styles.input}
+                  <input
+                    type="date"
+                    className={styles.input}
                     value={seg.start_date}
-                    onChange={e => updateSegment(i, "start_date", e.target.value)}
-                    max={seg.end_date || undefined} />
+                    onChange={(e) => updateSegment(i, "start_date", e.target.value)}
+                    max={seg.end_date || undefined}
+                  />
                 </div>
-                <div className={styles.formGroup} style={{ flex: 1 }}>
+                <div className={`${styles.formGroup} ${styles.segmentField}`}>
                   <label className={styles.label}>
                     Check-out{segments.length > 1 ? ` #${i + 1}` : ""}
                   </label>
-                  <input type="date" className={styles.input}
+                  <input
+                    type="date"
+                    className={styles.input}
                     value={seg.end_date}
-                    onChange={e => updateSegment(i, "end_date", e.target.value)}
-                    min={seg.start_date || undefined} />
+                    onChange={(e) => updateSegment(i, "end_date", e.target.value)}
+                    min={seg.start_date || undefined}
+                  />
                 </div>
                 {segNights(seg) > 0 && (
                   <div className={styles.segmentNights}>{segNights(seg)}n</div>
                 )}
                 {segments.length > 1 && (
-                  <button type="button" className={styles.removeSegBtn}
-                    onClick={() => removeSegment(i)} title="Remove segment">
+                  <button
+                    type="button"
+                    className={styles.removeSegBtn}
+                    onClick={() => removeSegment(i)}
+                    title="Remove segment"
+                  >
                     <Trash2 size={14} />
                   </button>
                 )}
@@ -258,7 +294,7 @@ export default function BookingsClient({ initialBookings, properties, customers 
               <PlusCircle size={14} /> Add another date block
             </button>
 
-            <div className={styles.formRow} style={{ marginTop: "1.25rem" }}>
+            <div className={`${styles.formRow} ${styles.formRowSpacedTop}`}>
               <div className={styles.formGroup}>
                 <label className={styles.label}>Status</label>
                 <select name="bookingStatus" className={styles.select}>
@@ -278,18 +314,19 @@ export default function BookingsClient({ initialBookings, properties, customers 
               </div>
             </div>
 
-            {errorMsg && (
-              <div style={{ color: "#ef4444", fontSize: "0.875rem", marginTop: "1rem",
-                padding: "0.75rem", background: "#fef2f2", borderRadius: "8px",
-                border: "1px solid #fca5a5" }}>
-                {errorMsg}
-              </div>
-            )}
+            {/* FIX: was inline style with background:"#fef2f2", border:"1px solid #fca5a5" — light red on dark */}
+            {errorMsg && <div className={styles.errorBox}>{errorMsg}</div>}
 
             <div className={styles.formActions}>
-              <button type="button" onClick={resetForm} className={styles.buttonSecondary}>Cancel</button>
+              <button type="button" onClick={resetForm} className={styles.buttonSecondary}>
+                Cancel
+              </button>
               <button type="submit" className={styles.buttonPrimary} disabled={isPending}>
-                {isPending ? <><Loader2 size={16} className="animate-spin" /> Processing...</> : "Confirm Booking"}
+                {isPending ? (
+                  <><Loader2 size={16} className="animate-spin" /> Processing...</>
+                ) : (
+                  "Confirm Booking"
+                )}
               </button>
             </div>
           </form>
@@ -300,57 +337,57 @@ export default function BookingsClient({ initialBookings, properties, customers 
             <div className={styles.emptyState}>
               <Calendar size={48} className={styles.emptyIcon} strokeWidth={1.5} />
               <h3 className={styles.emptyText}>No bookings yet</h3>
-              <p className={styles.emptySubText}>Create your first booking to start generating revenue.</p>
-              <button onClick={() => setIsAdding(true)} className={styles.buttonPrimary} style={{ marginTop: "1.5rem" }}>
+              <p className={styles.emptySubText}>
+                Create your first booking to start generating revenue.
+              </p>
+              {/* FIX: removed inline style={{ marginTop: "1.5rem" }} — use CSS class */}
+              <button onClick={() => setIsAdding(true)} className={`${styles.buttonPrimary} ${styles.emptyAction}`}>
                 <Plus size={16} /> Add Booking
               </button>
             </div>
           ) : (
             <div className={styles.grid}>
               {initialBookings.map((b) => (
-                <Link href={`/bookings/${b.booking_id}`} key={b.booking_id} style={{ textDecoration: "none" }}>
+                <Link href={`/bookings/${b.booking_id}`} key={b.booking_id} className={styles.cardLink}>
                   <div className={styles.card}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.75rem" }}>
-                      <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "#18181b", margin: 0 }}>
+                    {/* FIX: card header was full inline style — now CSS classes */}
+                    <div className={styles.cardTop}>
+                      {/* FIX: was color:"#18181b" — dark text invisible on dark card */}
+                      <h3 className={styles.cardAmount}>
                         {b.currency_code} {Number(b.amount).toLocaleString()}
                       </h3>
-                      {renderStatusBadge(b.booking_status)}
+                      {/* FIX: replaced renderStatusBadge() inline function with reusable StatusBadge component */}
+                      <StatusBadge status={b.booking_status} />
                     </div>
 
-                    <div style={{ display: "flex", gap: "0.4rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                    {/* FIX: platform/nights badges were hardcoded inline light styles — now MetaBadge component */}
+                    <div className={styles.cardTags}>
                       {b.platform && (
-                        <span style={{ fontSize: "0.7rem", background: "#e0e7ff", color: "#3730a3",
-                          padding: "0.15rem 0.4rem", borderRadius: "4px", fontWeight: 500 }}>
-                          {b.platform}
-                        </span>
+                        <MetaBadge variant="indigo">{b.platform}</MetaBadge>
                       )}
                       {b.total_nights && (
-                        <span style={{ fontSize: "0.7rem", background: "#f0fdf4", color: "#166534",
-                          padding: "0.15rem 0.4rem", borderRadius: "4px", fontWeight: 500 }}>
-                          {b.total_nights}N
-                        </span>
+                        <MetaBadge variant="green">{b.total_nights}N</MetaBadge>
                       )}
                     </div>
 
-                    <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start",
-                      marginBottom: "0.5rem", fontSize: "0.8125rem", color: "#71717a" }}>
-                      <Building size={14} style={{ marginTop: "0.1rem", flexShrink: 0 }} />
+                    {/* FIX: was inline style color:"#71717a" — now CSS class */}
+                    <div className={styles.cardMeta}>
+                      <Building size={14} className={styles.cardMetaIcon} />
                       <span>{b.property_name || "Unknown Property"}</span>
                     </div>
 
-                    <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start",
-                      marginBottom: "1rem", fontSize: "0.8125rem", color: "#71717a" }}>
-                      <User size={14} style={{ marginTop: "0.1rem", flexShrink: 0 }} />
+                    <div className={styles.cardMeta}>
+                      <User size={14} className={styles.cardMetaIcon} />
                       <span>{b.customer_name}</span>
                     </div>
 
-                    <div style={{ borderTop: "1px solid #f4f4f5", paddingTop: "0.75rem",
-                      display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: "#a1a1aa" }}>
+                    {/* FIX: was inline style borderTop:"1px solid #f4f4f5" — light border on dark card */}
+                    <div className={styles.cardFooter}>
                       <div>
-                        <div style={{ marginBottom: "0.25rem" }}>In: {formatDate(b.start_date)}</div>
-                        <div>Out: {formatDate(b.end_date)}</div>
+                        <div className={styles.cardFooterRow}>In: {formatDate(b.start_date)}</div>
+                        <div className={styles.cardFooterRow}>Out: {formatDate(b.end_date)}</div>
                       </div>
-                      <div style={{ textAlign: "right" }}>
+                      <div className={styles.cardFooterRight}>
                         {b.daily_rate && (
                           <div>{Number(b.daily_rate).toLocaleString()}/night</div>
                         )}

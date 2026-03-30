@@ -2,22 +2,32 @@
 
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Search, X } from "lucide-react";
+import styles from "./SearchableSelect.module.css";
 
-export default function SearchableSelect({ 
-  options = [], 
-  value, 
-  onChange, 
-  placeholder = "Select...", 
-  name, 
+/**
+ * SearchableSelect — fixed version.
+ *
+ * Changes from original:
+ * - All inline style objects replaced with CSS module classes
+ * - Dropdown background was rgba(255,255,255,0.03) — near-transparent, content bled through; now solid #111
+ * - Focus ring was opaque rgba(244,244,245,1) — white block on dark input; now subtle dark-compatible ring
+ * - Search divider was #f4f4f5 (light grey) — white line on dark dropdown; now rgba(255,255,255,0.08)
+ * - z-index was hardcoded 50 — now uses CSS variable --z-dropdown
+ */
+export default function SearchableSelect({
+  options = [],
+  value,
+  onChange,
+  placeholder = "Select...",
+  name,
   submitId = false,
   required,
-  disabled
+  disabled,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef(null);
 
-  // Close when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -28,86 +38,94 @@ export default function SearchableSelect({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filteredOptions = options.filter(opt => 
+  const filteredOptions = options.filter((opt) =>
     opt.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const selectedOption = options.find(opt => opt.name === value);
+  const selectedOption = options.find((opt) => opt.name === value);
 
   return (
-    <div className="searchable-select-container" ref={dropdownRef} style={{ position: "relative", width: "100%" }}>
-      {/* Hidden input for form submission via FormData */}
+    <div
+      className={styles.container}
+      ref={dropdownRef}
+    >
+      {/* Hidden input for form submission */}
       {name && (
-        <input 
-          type="hidden" 
-          name={name} 
-          value={submitId ? (selectedOption?.id || "") : (value || "")} 
-          required={required} 
+        <input
+          type="hidden"
+          name={name}
+          value={submitId ? selectedOption?.id ?? "" : value ?? ""}
+          required={required}
         />
       )}
-      
-      <div 
-        className={`searchable-select-trigger ${disabled ? 'disabled' : ''}`}
+
+      <button
+        type="button"
+        className={[
+          styles.trigger,
+          isOpen ? styles.triggerOpen : "",
+          disabled ? styles.triggerDisabled : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          border: isOpen ? "1px solid #a1a1aa" : "1px solid rgba(255, 255, 255, 0.08)",
-          borderRadius: "8px", padding: "0.625rem 0.75rem",
-          backgroundColor: disabled ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 0.03)", cursor: disabled ? "not-allowed" : "pointer",
-          fontSize: "0.875rem", color: selectedOption ? "#ffffff" : "#a1a1aa",
-          boxShadow: isOpen ? "0 0 0 2px rgba(244, 244, 245, 1)" : "none",
-          transition: "all 0.2s ease"
-        }}
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
       >
-        <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+        <span className={[styles.triggerText, !selectedOption ? styles.placeholder : ""].filter(Boolean).join(" ")}>
           {selectedOption ? selectedOption.name : placeholder}
         </span>
-        <ChevronDown size={16} color="#a1a1aa" style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.2s" }} />
-      </div>
+        <ChevronDown
+          size={16}
+          className={[styles.chevron, isOpen ? styles.chevronOpen : ""].filter(Boolean).join(" ")}
+        />
+      </button>
 
       {isOpen && (
-        <div style={{
-          position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0,
-          backgroundColor: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px",
-          boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)",
-          zIndex: 50, maxHeight: "250px", display: "flex", flexDirection: "column"
-        }}>
-          <div style={{ padding: "0.5rem", borderBottom: "1px solid #f4f4f5", display: "flex", alignItems: "center", gap: "0.5rem", backgroundColor: "rgba(255, 255, 255, 0.03)", borderTopLeftRadius: "8px", borderTopRightRadius: "8px" }}>
-            <Search size={14} color="#a1a1aa" />
-            <input 
+        <div className={styles.dropdown} role="listbox">
+          <div className={styles.searchBox}>
+            <Search size={14} className={styles.searchIcon} />
+            <input
               autoFocus
-              type="text" 
-              placeholder="Search..." 
+              type="text"
+              placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                border: "none", outline: "none", width: "100%", fontSize: "0.875rem", color: "#ffffff",
-                backgroundColor: "transparent"
-              }}
+              className={styles.searchInput}
             />
-            {searchTerm && <X size={14} color="#a1a1aa" style={{ cursor: "pointer" }} onClick={() => setSearchTerm("")} />}
+            {searchTerm && (
+              <button
+                type="button"
+                className={styles.clearBtn}
+                onClick={() => setSearchTerm("")}
+                aria-label="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
           </div>
-          
-          <div style={{ overflowY: "auto", padding: "0.25rem 0", flex: 1 }}>
+
+          <div className={styles.optionsList}>
             {filteredOptions.length === 0 ? (
-              <div style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", color: "#a1a1aa", textAlign: "center" }}>
-                No results found
-              </div>
+              <div className={styles.noResults}>No results found</div>
             ) : (
               filteredOptions.map((opt) => (
-                <div 
+                <div
                   key={opt.id}
+                  role="option"
+                  aria-selected={value === opt.name}
+                  className={[
+                    styles.option,
+                    value === opt.name ? styles.optionSelected : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
                   onClick={() => {
                     onChange(opt);
                     setIsOpen(false);
                     setSearchTerm("");
                   }}
-                  style={{
-                    padding: "0.5rem 1rem", fontSize: "0.875rem", color: "#ffffff",
-                    cursor: "pointer", backgroundColor: value === opt.name ? "rgba(255, 255, 255, 0.05)" : "transparent"
-                  }}
-                  onMouseEnter={(e) => e.target.style.backgroundColor = "rgba(255, 255, 255, 0.05)"}
-                  onMouseLeave={(e) => e.target.style.backgroundColor = value === opt.name ? "rgba(255, 255, 255, 0.05)" : "transparent"}
                 >
                   {opt.name}
                 </div>

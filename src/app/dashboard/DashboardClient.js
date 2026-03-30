@@ -2,25 +2,27 @@
 
 import { useState, useMemo } from "react";
 import styles from "./dashboard.module.css";
-import { Building, Users, Activity, TrendingUp, TrendingDown, Wallet, AlertCircle, CalendarCheck, CalendarClock, CalendarX } from "lucide-react";
+import {
+  Building, Users, Activity, TrendingUp, TrendingDown,
+  Wallet, AlertCircle, CalendarCheck, CalendarClock, CalendarX,
+} from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar,
-  PieChart, Pie, Cell, Legend
-} from 'recharts';
+  BarChart, Bar, PieChart, Pie, Cell, Legend,
+} from "recharts";
 
-const STATUS_COLORS = { Confirmed: '#10b981', Pending: '#f59e0b', Cancelled: '#ef4444' };
-const PIE_COLORS = ['#10b981', '#f59e0b', '#ef4444', '#3b82f6'];
+const STATUS_COLORS = { Confirmed: "#10b981", Pending: "#f59e0b", Cancelled: "#ef4444" };
+const PIE_COLORS = ["#10b981", "#f59e0b", "#ef4444", "#3b82f6"];
 
 function fmt(n, code) {
   const v = Number(n || 0);
-  const sign = v >= 0 ? '+' : '';
+  const sign = v >= 0 ? "+" : "";
   const abs = Math.abs(v).toLocaleString(undefined, { maximumFractionDigits: 0 });
   return `${sign}${code} ${abs}`;
 }
 
-function MetricCard({ label, today, month, year, currency, icon: Icon, positive }) {
-  const color = (v) => Number(v) >= 0 ? styles.green : styles.red;
+function MetricCard({ label, today, month, year, currency, icon: Icon }) {
+  const color = (v) => (Number(v) >= 0 ? styles.green : styles.red);
   return (
     <div className={styles.metricCard}>
       <div className={styles.metricHeader}>
@@ -56,7 +58,9 @@ const CustomTooltip = ({ active, payload, label, prefix }) => {
         <div key={p.dataKey} className={styles.tooltipRow}>
           <span style={{ color: p.color }}>●</span>
           <span className={styles.tooltipKey}>{p.name}</span>
-          <span className={styles.tooltipVal}>{prefix}{Number(p.value).toLocaleString()}</span>
+          <span className={styles.tooltipVal}>
+            {prefix}{Number(p.value).toLocaleString()}
+          </span>
         </div>
       ))}
     </div>
@@ -64,8 +68,8 @@ const CustomTooltip = ({ active, payload, label, prefix }) => {
 };
 
 export default function DashboardClient({ data }) {
-  const [currency, setCurrency] = useState('USD');
-  const [tenure, setTenure] = useState('month');
+  const [currency, setCurrency] = useState("USD");
+  const [tenure, setTenure] = useState("month");
 
   if (!data) {
     return (
@@ -76,50 +80,56 @@ export default function DashboardClient({ data }) {
     );
   }
 
-  const getMetrics = (currency) => {
-    const mRow = data.snapshots.monthly.find(r => r.currency_code === currency) || {};
-    const yRow = data.snapshots.yearly.find(r => r.currency_code === currency) || {};
-    const tRow = data.snapshots.today.find(r => r.currency_code === currency) || {};
+  const getMetrics = (cur) => {
+    const mRow = data.snapshots.monthly.find((r) => r.currency_code === cur) || {};
+    const yRow = data.snapshots.yearly.find((r) => r.currency_code === cur) || {};
+    const tRow = data.snapshots.today.find((r) => r.currency_code === cur) || {};
     const ti = Number(tRow.inc || 0), te = Number(tRow.exp || 0), tp = ti - te;
     return {
-      income:  { t: ti,             m: Number(mRow.inc || 0) + ti, y: Number(yRow.inc || 0) + ti },
-      expense: { t: te,             m: Number(mRow.exp || 0) + te, y: Number(yRow.exp || 0) + te },
-      profit:  { t: tp,             m: Number(mRow.prof || 0) + tp, y: Number(yRow.prof || 0) + tp },
+      income:  { t: ti, m: Number(mRow.inc || 0) + ti,  y: Number(yRow.inc || 0) + ti },
+      expense: { t: te, m: Number(mRow.exp || 0) + te,  y: Number(yRow.exp || 0) + te },
+      profit:  { t: tp, m: Number(mRow.prof || 0) + tp, y: Number(yRow.prof || 0) + tp },
     };
   };
 
-  const usd = getMetrics('USD'), pkr = getMetrics('PKR');
-  const hasHistory = data.snapshots.monthly.length > 0 || data.snapshots.today.length > 0;
+  const usd = getMetrics("USD"), pkr = getMetrics("PKR");
+  const hasHistory =
+    data.snapshots.monthly.length > 0 || data.snapshots.today.length > 0;
 
-  // ── Filtered chart data based on currency + tenure ──
-  const cutoffDays = tenure === 'day' ? 1 : tenure === 'month' ? 30 : 365;
+  const cutoffDays = tenure === "day" ? 1 : tenure === "month" ? 30 : 365;
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - cutoffDays);
 
-  const tsFiltered = useMemo(() => {
-    return data.charts.timeSeries
-      .filter(d => d.currency_code === currency && new Date(d.date) >= cutoff)
-      .map(r => ({
-        ...r,
-        label: new Date(r.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
-      }));
-  }, [currency, tenure, data.charts.timeSeries]);
+  const tsFiltered = useMemo(
+    () =>
+      data.charts.timeSeries
+        .filter((d) => d.currency_code === currency && new Date(d.date) >= cutoff)
+        .map((r) => ({
+          ...r,
+          label: new Date(r.date).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            timeZone: "UTC",
+          }),
+        })),
+    [currency, tenure, data.charts.timeSeries]
+  );
 
-  const propFiltered = useMemo(() => {
-    return data.charts.propertyPerformance.filter(d => d.currency_code === currency);
-  }, [currency, data.charts.propertyPerformance]);
+  const propFiltered = useMemo(
+    () => data.charts.propertyPerformance.filter((d) => d.currency_code === currency),
+    [currency, data.charts.propertyPerformance]
+  );
 
-  const bookingFiltered = useMemo(() => {
-    return data.charts.bookingRatio[tenure] || [];
-  }, [tenure, data.charts.bookingRatio]);
+  const bookingFiltered = useMemo(
+    () => data.charts.bookingRatio[tenure] || [],
+    [tenure, data.charts.bookingRatio]
+  );
 
-  const tsFormatted = tsFiltered;
-  const propUSD = propFiltered;
-  const bookings = bookingFiltered;
+  const mainAccounts = data.balances.filter((a) => a.account_type === "Main");
+  const propAccounts = data.balances.filter((a) => a.account_type !== "Main");
 
-  // Main accounts first, then property accounts
-  const mainAccounts = data.balances.filter(a => a.account_type === 'Main');
-  const propAccounts = data.balances.filter(a => a.account_type !== 'Main');
+  const tenureLabel =
+    tenure === "day" ? "Today" : tenure === "month" ? "Last 30 days" : "Last 12 months";
 
   return (
     <div className={styles.page}>
@@ -127,20 +137,40 @@ export default function DashboardClient({ data }) {
       <div className={styles.hero}>
         <div className={styles.heroText}>
           <h1 className={styles.heroTitle}>Headquarters</h1>
-          <p className={styles.heroSub}>Live consolidated view across all properties and ledgers.</p>
+          <p className={styles.heroSub}>
+            Live consolidated view across all properties and ledgers.
+          </p>
         </div>
         <div className={styles.kpiStrip}>
           <div className={styles.kpiPill}>
-            <div className={styles.kpiIcon} style={{ background: '#ede9fe', color: '#5b21b6' }}><Building size={16} /></div>
-            <div><div className={styles.kpiNum}>{data.kpis.totalProperties}</div><div className={styles.kpiLbl}>Properties</div></div>
+            {/* FIX: was inline style={{ background:'#ede9fe', color:'#5b21b6' }} — light on dark */}
+            <div className={`${styles.kpiIcon} ${styles.kpiIconPurple}`}>
+              <Building size={16} />
+            </div>
+            <div>
+              <div className={styles.kpiNum}>{data.kpis.totalProperties}</div>
+              <div className={styles.kpiLbl}>Properties</div>
+            </div>
           </div>
           <div className={styles.kpiPill}>
-            <div className={styles.kpiIcon} style={{ background: '#dcfce7', color: '#166534' }}><Users size={16} /></div>
-            <div><div className={styles.kpiNum}>{data.kpis.totalCustomers}</div><div className={styles.kpiLbl}>Customers</div></div>
+            {/* FIX: was inline style={{ background:'#dcfce7', color:'#166534' }} — light on dark */}
+            <div className={`${styles.kpiIcon} ${styles.kpiIconGreen}`}>
+              <Users size={16} />
+            </div>
+            <div>
+              <div className={styles.kpiNum}>{data.kpis.totalCustomers}</div>
+              <div className={styles.kpiLbl}>Customers</div>
+            </div>
           </div>
           <div className={styles.kpiPill}>
-            <div className={styles.kpiIcon} style={{ background: '#fef3c7', color: '#92400e' }}><Activity size={16} /></div>
-            <div><div className={styles.kpiNum}>{data.kpis.totalTransactions}</div><div className={styles.kpiLbl}>Transactions</div></div>
+            {/* FIX: was inline style={{ background:'#fef3c7', color:'#92400e' }} — light on dark */}
+            <div className={`${styles.kpiIcon} ${styles.kpiIconAmber}`}>
+              <Activity size={16} />
+            </div>
+            <div>
+              <div className={styles.kpiNum}>{data.kpis.totalTransactions}</div>
+              <div className={styles.kpiLbl}>Transactions</div>
+            </div>
           </div>
         </div>
       </div>
@@ -148,7 +178,10 @@ export default function DashboardClient({ data }) {
       {!hasHistory && (
         <div className={styles.alertBanner}>
           <AlertCircle size={16} />
-          <span><strong>Awaiting ETL Data:</strong> The Python scheduler hasn't generated historical snapshots yet. Only live intra-day data is shown below.</span>
+          <span>
+            <strong>Awaiting ETL Data:</strong> The Python scheduler hasn&apos;t generated
+            historical snapshots yet. Only live intra-day data is shown below.
+          </span>
         </div>
       )}
 
@@ -160,7 +193,7 @@ export default function DashboardClient({ data }) {
           <span className={styles.sectionBadge}>Live Running</span>
         </div>
         <div className={styles.vaultGrid}>
-          {mainAccounts.map(acc => (
+          {mainAccounts.map((acc) => (
             <div key={acc.srno} className={`${styles.vaultCard} ${styles.vaultMain}`}>
               <div className={styles.vaultLabel}>Global Master · {acc.currency_code}</div>
               <div className={`${styles.vaultAmount} ${Number(acc.profit) >= 0 ? styles.green : styles.red}`}>
@@ -169,7 +202,7 @@ export default function DashboardClient({ data }) {
               <div className={styles.vaultBadge}>Main Ledger</div>
             </div>
           ))}
-          {propAccounts.map(acc => (
+          {propAccounts.map((acc) => (
             <div key={acc.srno} className={styles.vaultCard}>
               <div className={styles.vaultLabel}>{acc.property_name} · {acc.currency_code}</div>
               <div className={`${styles.vaultAmount} ${Number(acc.profit) >= 0 ? styles.green : styles.red}`}>
@@ -185,17 +218,15 @@ export default function DashboardClient({ data }) {
       <section>
         <div className={styles.sectionHeader}>
           <TrendingUp size={16} className={styles.sectionIcon} />
-          <h2 className={styles.sectionTitle}>P&L Performance</h2>
+          <h2 className={styles.sectionTitle}>P&amp;L Performance</h2>
         </div>
         <div className={styles.perfGrid}>
-          {/* USD */}
-          <MetricCard label="Income (USD)" today={usd.income.t} month={usd.income.m} year={usd.income.y} currency="USD" icon={TrendingUp} />
-          <MetricCard label="Expense (USD)" today={-usd.expense.t} month={-usd.expense.m} year={-usd.expense.y} currency="USD" icon={TrendingDown} />
-          <MetricCard label="Net Profit (USD)" today={usd.profit.t} month={usd.profit.m} year={usd.profit.y} currency="USD" icon={Wallet} />
-          {/* PKR */}
-          <MetricCard label="Income (PKR)" today={pkr.income.t} month={pkr.income.m} year={pkr.income.y} currency="PKR" icon={TrendingUp} />
-          <MetricCard label="Expense (PKR)" today={-pkr.expense.t} month={-pkr.expense.m} year={-pkr.expense.y} currency="PKR" icon={TrendingDown} />
-          <MetricCard label="Net Profit (PKR)" today={pkr.profit.t} month={pkr.profit.m} year={pkr.profit.y} currency="PKR" icon={Wallet} />
+          <MetricCard label="Income (USD)"     today={usd.income.t}    month={usd.income.m}    year={usd.income.y}    currency="USD" icon={TrendingUp} />
+          <MetricCard label="Expense (USD)"    today={-usd.expense.t}  month={-usd.expense.m}  year={-usd.expense.y}  currency="USD" icon={TrendingDown} />
+          <MetricCard label="Net Profit (USD)" today={usd.profit.t}    month={usd.profit.m}    year={usd.profit.y}    currency="USD" icon={Wallet} />
+          <MetricCard label="Income (PKR)"     today={pkr.income.t}    month={pkr.income.m}    year={pkr.income.y}    currency="PKR" icon={TrendingUp} />
+          <MetricCard label="Expense (PKR)"    today={-pkr.expense.t}  month={-pkr.expense.m}  year={-pkr.expense.y}  currency="PKR" icon={TrendingDown} />
+          <MetricCard label="Net Profit (PKR)" today={pkr.profit.t}    month={pkr.profit.m}    year={pkr.profit.y}    currency="PKR" icon={Wallet} />
         </div>
       </section>
 
@@ -204,66 +235,69 @@ export default function DashboardClient({ data }) {
         <div className={styles.sectionHeader}>
           <Activity size={16} className={styles.sectionIcon} />
           <h2 className={styles.sectionTitle}>Financial Visualizations</h2>
-          {/* ── Filter Bar ── */}
           <div className={styles.filterBar}>
             <div className={styles.filterGroup}>
-              {['USD', 'PKR'].map(c => (
+              {["USD", "PKR"].map((c) => (
                 <button
                   key={c}
                   onClick={() => setCurrency(c)}
-                  className={`${styles.filterBtn} ${currency === c ? styles.filterBtnActive : ''}`}
+                  className={`${styles.filterBtn} ${currency === c ? styles.filterBtnActive : ""}`}
                 >
-                  {c === 'USD' ? '$ USD' : '₨ PKR'}
+                  {c === "USD" ? "$ USD" : "₨ PKR"}
                 </button>
               ))}
             </div>
             <div className={styles.filterSep} />
             <div className={styles.filterGroup}>
-              {[['day', 'Today'], ['month', 'Month'], ['year', 'Year']].map(([val, label]) => (
+              {[["day", "Today"], ["month", "Month"], ["year", "Year"]].map(([val, lbl]) => (
                 <button
                   key={val}
                   onClick={() => setTenure(val)}
-                  className={`${styles.filterBtn} ${tenure === val ? styles.filterBtnActive : ''}`}
+                  className={`${styles.filterBtn} ${tenure === val ? styles.filterBtnActive : ""}`}
                 >
-                  {label}
+                  {lbl}
                 </button>
               ))}
             </div>
           </div>
         </div>
-        <div className={styles.chartsGrid}>
 
-          {/* Area Chart */}
-          <div className={styles.chartCard} style={{ gridColumn: '1 / -1' }}>
+        <div className={styles.chartsGrid}>
+          {/* Area Chart — FIX: was inline style={{ gridColumn:'1 / -1' }} */}
+          <div className={`${styles.chartCard} ${styles.chartCardFull}`}>
             <div className={styles.chartHeader}>
               <div>
                 <div className={styles.chartTitle}>Revenue vs Expense Trend</div>
-                <div className={styles.chartSub}>{currency} · {tenure === 'day' ? 'Today' : tenure === 'month' ? 'Last 30 days' : 'Last 12 months'} · from ETL snapshots</div>
+                <div className={styles.chartSub}>
+                  {currency} · {tenureLabel} · from ETL snapshots
+                </div>
               </div>
               <div className={styles.chartLegend}>
-                <span className={styles.legendDot} style={{ background: '#10b981' }} />Revenue
-                <span className={styles.legendDot} style={{ background: '#ef4444' }} />Expense
+                <span className={`${styles.legendDot} ${styles.legendDotGreen}`} />Revenue
+                <span className={`${styles.legendDot} ${styles.legendDotRed}`} />Expense
               </div>
             </div>
-            {tsFormatted.length === 0 ? (
-              <div className={styles.chartEmpty}>No historical data yet — run the Python scheduler to populate.</div>
+            {tsFiltered.length === 0 ? (
+              <div className={styles.chartEmpty}>
+                No historical data yet — run the Python scheduler to populate.
+              </div>
             ) : (
               <div className={styles.chartBody}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={tsFormatted} margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
+                  <AreaChart data={tsFiltered} margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
                     <defs>
                       <linearGradient id="gRev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.25}/>
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                        <stop offset="5%"  stopColor="#10b981" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="gExp" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.25}/>
-                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                        <stop offset="5%"  stopColor="#ef4444" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255, 255, 255, 0.08)" />
-                    <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dy={8} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dx={-8} tickFormatter={v => `$${v}`} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.08)" />
+                    <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#a1a1aa" }} dy={8} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#a1a1aa" }} dx={-8} tickFormatter={(v) => `$${v}`} />
                     <Tooltip content={<CustomTooltip prefix="$" />} />
                     <Area type="monotone" dataKey="revenue" name="Revenue" stroke="#10b981" strokeWidth={2} fill="url(#gRev)" />
                     <Area type="monotone" dataKey="expense" name="Expense" stroke="#ef4444" strokeWidth={2} fill="url(#gExp)" />
@@ -278,23 +312,25 @@ export default function DashboardClient({ data }) {
             <div className={styles.chartHeader}>
               <div>
                 <div className={styles.chartTitle}>Property Performance</div>
-                <div className={styles.chartSub}>Income · Expense · Net Profit per property ({currency})</div>
+                <div className={styles.chartSub}>
+                  Income · Expense · Net Profit per property ({currency})
+                </div>
               </div>
             </div>
-            {propUSD.length === 0 ? (
+            {propFiltered.length === 0 ? (
               <div className={styles.chartEmpty}>No property data found.</div>
             ) : (
               <div className={styles.chartBody}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={propUSD} barSize={14} margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255, 255, 255, 0.08)" />
-                    <XAxis dataKey="property_name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dy={8} />
-                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#a1a1aa' }} dx={-8} tickFormatter={v => `$${v}`} />
-                    <Tooltip cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} content={<CustomTooltip prefix="$" />} />
-                    <Legend iconType="circle" wrapperStyle={{ fontSize: '11px', paddingTop: '16px', color: '#a1a1aa' }} />
-                    <Bar dataKey="income" name="Income" fill="#10b981" radius={[3, 3, 0, 0]} />
-                    <Bar dataKey="expense" name="Expense" fill="#ef4444" radius={[3, 3, 0, 0]} />
-                    <Bar dataKey="profit" name="Net Profit" fill="#3b82f6" radius={[3, 3, 0, 0]} />
+                  <BarChart data={propFiltered} barSize={14} margin={{ top: 10, right: 20, left: 10, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.08)" />
+                    <XAxis dataKey="property_name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#a1a1aa" }} dy={8} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: "#a1a1aa" }} dx={-8} tickFormatter={(v) => `$${v}`} />
+                    <Tooltip cursor={{ fill: "rgba(255,255,255,0.05)" }} content={<CustomTooltip prefix="$" />} />
+                    <Legend iconType="circle" wrapperStyle={{ fontSize: "11px", paddingTop: "16px", color: "#a1a1aa" }} />
+                    <Bar dataKey="income"  name="Income"     fill="#10b981" radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="expense" name="Expense"    fill="#ef4444" radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="profit"  name="Net Profit" fill="#3b82f6" radius={[3, 3, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -306,37 +342,49 @@ export default function DashboardClient({ data }) {
             <div className={styles.chartHeader}>
               <div>
                 <div className={styles.chartTitle}>Booking Status Breakdown</div>
-                <div className={styles.chartSub}>{tenure === 'day' ? 'Today' : tenure === 'month' ? 'This month' : 'This year'}</div>
+                <div className={styles.chartSub}>
+                  {tenure === "day" ? "Today" : tenure === "month" ? "This month" : "This year"}
+                </div>
               </div>
             </div>
-            {bookings.length === 0 ? (
+            {bookingFiltered.length === 0 ? (
               <div className={styles.chartEmpty}>No booking data found.</div>
             ) : (
-              <div className={styles.chartBody} style={{ height: '280px' }}>
+              /* FIX: was inline style={{ height:'280px' }} — moved to chartBody in CSS */
+              <div className={styles.chartBody}>
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={bookings}
+                      data={bookingFiltered}
                       dataKey="value"
                       nameKey="name"
                       cx="50%" cy="45%"
-                      innerRadius={65} outerRadius={105}
+                      innerRadius={65}
+                      outerRadius={105}
                       paddingAngle={4}
-                      label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
+                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
                       labelLine={false}
                     >
-                      {bookings.map((entry, i) => (
+                      {bookingFiltered.map((entry, i) => (
                         <Cell key={i} fill={STATUS_COLORS[entry.name] || PIE_COLORS[i]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(val) => [`${val} bookings`, '']} contentStyle={{ borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.08)', backgroundColor: '#050505', color: '#ededed', fontSize: '12px' }} />
-                    <Legend iconType="circle" verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '12px', color: '#a1a1aa' }} />
+                    <Tooltip
+                      formatter={(val) => [`${val} bookings`, ""]}
+                      contentStyle={{
+                        borderRadius: "8px",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        backgroundColor: "#050505",
+                        color: "#ededed",
+                        fontSize: "12px",
+                      }}
+                    />
+                    <Legend iconType="circle" verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: "12px", color: "#a1a1aa" }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             )}
           </div>
-
         </div>
       </section>
     </div>

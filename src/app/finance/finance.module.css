@@ -56,7 +56,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 }
 
 .formGrid {
@@ -66,9 +66,7 @@
 }
 
 @media (max-width: 768px) {
-  .formGrid {
-    grid-template-columns: 1fr;
-  }
+  .formGrid { grid-template-columns: 1fr; }
 }
 
 .fullWidth {
@@ -83,9 +81,7 @@
   margin-bottom: 0.5rem;
 }
 
-.input,
-.textarea,
-.select {
+.input, .textarea, .select {
   width: 100%;
   padding: 0.625rem 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -104,13 +100,9 @@
   font-family: inherit;
 }
 
-.input:focus,
-.textarea:focus,
-.select:focus {
-  border-color: rgba(255, 255, 255, 0.4);
-  /* FIX: was #ffffff — too harsh; subtle glow is more polished */
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
-  /* FIX: added focus ring for accessibility */
+.input:focus, .textarea:focus, .select:focus {
+  border-color: rgba(255, 255, 255, 0.4); /* FIX: was #ffffff — too harsh; subtle glow is more polished */
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06); /* FIX: added focus ring for accessibility */
 }
 
 .currencyAddon {
@@ -162,26 +154,20 @@
 .errorBox {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background-color: rgba(239, 68, 68, 0.1);
-  /* FIX: was #fef2f2 — light red on dark page */
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  /* FIX: was #fecaca */
+  background-color: rgba(239, 68, 68, 0.1); /* FIX: was #fef2f2 — light red on dark page */
+  border: 1px solid rgba(239, 68, 68, 0.3); /* FIX: was #fecaca */
   border-radius: 8px;
-  color: #f87171;
-  /* FIX: was #991b1b (very dark red) — unreadable on dark bg */
+  color: #f87171; /* FIX: was #991b1b (very dark red) — unreadable on dark bg */
   font-size: 0.875rem;
 }
 
 .successBox {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background-color: rgba(16, 185, 129, 0.1);
-  /* FIX: was #f0fdf4 — light green on dark page */
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  /* FIX: was #bbf7d0 */
+  background-color: rgba(16, 185, 129, 0.1); /* FIX: was #f0fdf4 — light green on dark page */
+  border: 1px solid rgba(16, 185, 129, 0.25); /* FIX: was #bbf7d0 */
   border-radius: 8px;
-  color: #34d399;
-  /* FIX: was #166534 (very dark green) — unreadable on dark bg */
+  color: #34d399; /* FIX: was #166534 (very dark green) — unreadable on dark bg */
   font-size: 0.875rem;
 }
 
@@ -202,4 +188,23 @@
   font-size: 0.8125rem;
   color: #a1a1aa;
   line-height: 1.5;
+}
+
+/* ── Classes extracted from inline styles in FinanceClient ── */
+
+/* Balance value colour variants — FIX: were inline style={{ color: balance >= 0 ? '#10b981' : '#ef4444' }} */
+.balancePositive {
+  font-weight: 600;
+  color: #10b981;
+}
+.balanceNegative {
+  font-weight: 600;
+  color: #f87171; /* FIX: was #ef4444 — slightly lighter for dark bg readability */
+}
+
+/* Exchange rate hint — FIX: was inline style={{ fontSize, color, marginTop }} */
+.inputHint {
+  font-size: 0.7rem;
+  color: #a1a1aa;
+  margin-top: 0.25rem;
 }

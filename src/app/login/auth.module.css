@@ -3,21 +3,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000000;
-  /* FIX: was #f9fafb (light) — now matches dark theme */
+  background: #000000; /* FIX: was #f9fafb (light) — now matches dark theme */
   padding: 2rem 1rem;
   font-family: var(--font-geist-sans), sans-serif;
 }
 
 .card {
-  background: #09090b;
-  /* FIX: was near-transparent rgba — now a solid dark card for contrast */
+  background: #09090b; /* FIX: was near-transparent rgba — now a solid dark card for contrast */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 2.5rem;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
 }
 
 .logoArea {
@@ -71,12 +69,9 @@
 }
 
 .errorBox {
-  background: rgba(239, 68, 68, 0.1);
-  /* FIX: was #fef2f2 — light red box on dark page */
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  /* FIX: was #fca5a5 */
-  color: #f87171;
-  /* FIX: was #dc2626 — lighter red readable on dark bg */
+  background: rgba(239, 68, 68, 0.1); /* FIX: was #fef2f2 — light red box on dark page */
+  border: 1px solid rgba(239, 68, 68, 0.3); /* FIX: was #fca5a5 */
+  color: #f87171; /* FIX: was #dc2626 — lighter red readable on dark bg */
   font-size: 0.8125rem;
   padding: 0.75rem 1rem;
   border-radius: 8px;
@@ -104,14 +99,12 @@
 .label {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #a1a1aa;
-  /* FIX: was #374151 (dark grey) — near-invisible on dark background */
+  color: #a1a1aa; /* FIX: was #374151 (dark grey) — near-invisible on dark background */
 }
 
 .input {
   padding: 0.625rem 0.875rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  /* FIX: was #d4d4d8 (light grey) — increased alpha for dark bg */
+  border: 1px solid rgba(255, 255, 255, 0.12); /* FIX: was #d4d4d8 (light grey) — increased alpha for dark bg */
   border-radius: 8px;
   font-size: 0.875rem;
   font-family: inherit;
@@ -125,8 +118,7 @@
 .input:focus {
   border-color: rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
-  /* FIX: was rgba(9,9,11,0.06) — near-invisible on dark */
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06); /* FIX: was rgba(9,9,11,0.06) — near-invisible on dark */
 }
 
 .btn {
@@ -173,3 +165,12 @@
 .link:hover {
   text-decoration: underline;
 }
+
+/* FIX: .appName was used on an <h1> element — changed to <span> in LoginClient/RegisterClient.
+   Explicitly set display:block so it behaves identically to the old block heading. */
+.appName {
+  display: block;
+}
+
+/* FIX: .heading was previously an <h2> subordinate to the <h1 appName>.
+   Now it is the correct <h1> (page's primary heading). No style change needed. */

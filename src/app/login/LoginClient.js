@@ -24,26 +24,47 @@ export default function LoginClient() {
     <div className={styles.page}>
       <div className={styles.card}>
         <div className={styles.logoArea}>
-          <Link href='/'>
+          <Link href="/">
             <div>
-              <h1 className={styles.appName}>Mulk</h1>
+              {/* FIX: was <h1 className={styles.appName}> — an <h1> inside an auth card is wrong
+                  heading hierarchy (the page <h2> "Welcome back" would then be subordinate to it).
+                  Changed to a styled <span> — visual appearance is identical via CSS. */}
+              <span className={styles.appName}>Mulk</span>
               <div className={styles.appSlogan}>Manage renting portfolios</div>
             </div>
           </Link>
         </div>
-        <h2 className={styles.heading}>Welcome back</h2>
+
+        <h1 className={styles.heading}>Welcome back</h1>
         <p className={styles.sub}>Sign in to your business account to continue.</p>
 
         {error && <div className={styles.errorBox}>{error}</div>}
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.group}>
-            <label className={styles.label}>Email Address</label>
-            <input name="email" type="email" className={styles.input} placeholder="you@business.com" autoComplete="email" required />
+            {/* FIX: added htmlFor/id pairing — labels were not associated with their inputs */}
+            <label htmlFor="login-email" className={styles.label}>Email Address</label>
+            <input
+              id="login-email"
+              name="email"
+              type="email"
+              className={styles.input}
+              placeholder="you@business.com"
+              autoComplete="email"
+              required
+            />
           </div>
           <div className={styles.group}>
-            <label className={styles.label}>Password</label>
-            <input name="password" type="password" className={styles.input} placeholder="Your password" autoComplete="current-password" required />
+            <label htmlFor="login-password" className={styles.label}>Password</label>
+            <input
+              id="login-password"
+              name="password"
+              type="password"
+              className={styles.input}
+              placeholder="Your password"
+              autoComplete="current-password"
+              required
+            />
           </div>
           <button type="submit" className={styles.btn} disabled={isPending}>
             {isPending ? <Loader2 size={16} className="animate-spin" /> : null}
@@ -52,7 +73,10 @@ export default function LoginClient() {
         </form>
 
         <p className={styles.footer}>
-          No account yet? <Link href="/register" className={styles.link}>Create a business</Link>
+          No account yet?{" "}
+          <Link href="/register" className={styles.link}>
+            Create a business
+          </Link>
         </p>
       </div>
     </div>

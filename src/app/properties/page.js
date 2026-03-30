@@ -1,17 +1,8 @@
 import { getProperties } from "@/actions/property-actions";
 import ManagePropertiesClient from "./ManagePropertiesClient";
-
-export const metadata = {
-  title: "Manage Properties | Dastan",
-  description: "Manage your real estate properties and related financial accounts.",
-};
-
+/* FIX: title was "Manage Properties | Dastan" — standardised to "Mulk" */
+export const metadata = { title: "Properties — Mulk" };
 export default async function PropertiesPage() {
   const properties = await getProperties();
-
-  return (
-    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
-      <ManagePropertiesClient initialProperties={properties} />
-    </main>
-  );
+  return <main><ManagePropertiesClient initialProperties={properties} /></main>;
 }

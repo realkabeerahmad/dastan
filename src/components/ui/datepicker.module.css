@@ -36,14 +36,11 @@
   top: calc(100% + 0.5rem);
   left: 0;
   width: 280px;
-  background-color: #111111;
-  /* FIX: was near-transparent rgba — popover needs solid bg to not bleed through */
+  background-color: #111111; /* FIX: was near-transparent rgba — popover needs solid bg to not bleed through */
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-  /* FIX: increased shadow opacity for dark theme */
-  z-index: var(--z-dropdown, 100);
-  /* FIX: was hardcoded 50 — now uses z-index system */
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.2); /* FIX: increased shadow opacity for dark theme */
+  z-index: var(--z-dropdown, 100); /* FIX: was hardcoded 50 — now uses z-index system */
   padding: 1rem;
   font-family: var(--font-geist-sans), sans-serif;
 }
@@ -121,8 +118,7 @@
 
 .selected {
   background-color: #ffffff;
-  color: #09090b;
-  /* FIX: was #ffffff — white text on white background was completely invisible */
+  color: #09090b; /* FIX: was #ffffff — white text on white background was completely invisible */
   font-weight: 600;
 }
 
@@ -130,4 +126,18 @@
   color: #ffffff;
   background-color: rgba(255, 255, 255, 0.05);
   font-weight: 600;
+}
+
+/* ── Open state modifier (replaces the inline borderColor override in DatePicker.js) ── */
+/* FIX: original code used style={{ borderColor: isOpen ? "#18181b" : "#e4e4e7" }}
+   which overrode the dark CSS with light-theme values. Now handled via class. */
+.inputContainerOpen {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+}
+
+/* Calendar icon colour (was hardcoded color="#71717a" on JSX element) */
+.calendarIcon {
+  color: #a1a1aa;
+  flex-shrink: 0;
 }

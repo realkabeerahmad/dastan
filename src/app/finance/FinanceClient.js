@@ -212,7 +212,8 @@ export default function FinanceClient({ properties, accounts }) {
               {fromAccObj && (
                 <div className={styles.balanceLabel}>
                   <span>Available Profit Margin:</span>
-                  <span style={{ fontWeight: 600, color: fromAccObj.balance >= 0 ? '#10b981' : '#ef4444' }}>
+                  {/* FIX: was inline style with conditional color — now CSS classes */}
+                  <span className={fromAccObj.balance >= 0 ? styles.balancePositive : styles.balanceNegative}>
                     {fromAccObj.currencyCode} {fromAccObj.balance.toLocaleString()}
                   </span>
                 </div>
@@ -230,7 +231,8 @@ export default function FinanceClient({ properties, accounts }) {
               {toAccObj && (
                 <div className={styles.balanceLabel}>
                   <span>Current Profit Margin:</span>
-                  <span style={{ fontWeight: 600, color: toAccObj.balance >= 0 ? '#10b981' : '#ef4444' }}>
+                  {/* FIX: was inline style with conditional color — now CSS classes */}
+                  <span className={toAccObj.balance >= 0 ? styles.balancePositive : styles.balanceNegative}>
                     {toAccObj.currencyCode} {toAccObj.balance.toLocaleString()}
                   </span>
                 </div>
@@ -262,7 +264,8 @@ export default function FinanceClient({ properties, accounts }) {
                 className={styles.input} 
                 required 
               />
-              <div style={{ fontSize: '0.7rem', color: '#a1a1aa', marginTop: '0.25rem' }}>
+              {/* FIX: was inline style={{ fontSize, color, marginTop }} */}
+              <div className={styles.inputHint}>
                 For same currency, keep as <code>1.0</code>
               </div>
             </div>

@@ -1,0 +1,45 @@
+/* StatusBadge.module.css
+   Single source of truth for every status chip in the app.
+   Previously scattered as inline styles inside renderStatusBadge() in BookingsClient
+   and as hardcoded hex values inside dashboard kpiPill inline styles. */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  border-radius: 12px;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+/* Size variants */
+.badge:not(.sm) {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+}
+.sm {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+}
+
+/* Status colours — dark-theme compatible */
+.confirmed {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.pending {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.cancelled {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.default {
+  color: #a1a1aa;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

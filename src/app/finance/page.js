@@ -1,17 +1,10 @@
 import { getPropertiesForFinance, getAllAccounts } from "@/actions/finance-actions";
 import FinanceClient from "./FinanceClient";
-
-export const metadata = {
-  title: "Finance & Accounts | Dastan",
-};
-
+/* FIX: title was "Finance & Accounts | Dastan" — standardised to "Mulk" */
+export const metadata = { title: "Finance — Mulk" };
 export default async function FinancePage() {
-  const properties = await getPropertiesForFinance();
-  const accounts = await getAllAccounts();
-
-  return (
-    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
-      <FinanceClient properties={properties} accounts={accounts} />
-    </main>
-  );
+  const [properties, accounts] = await Promise.all([
+    getPropertiesForFinance(), getAllAccounts(),
+  ]);
+  return <main><FinanceClient properties={properties} accounts={accounts} /></main>;
 }

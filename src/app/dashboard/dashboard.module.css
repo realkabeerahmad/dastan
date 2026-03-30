@@ -60,12 +60,12 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 0.75rem 1.25rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   transition: box-shadow 0.2s;
 }
 
 .kpiPill:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
 .kpiIcon {
@@ -99,15 +99,12 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  background: rgba(245, 158, 11, 0.1);
-  /* FIX: was #fffbeb (light yellow) — dark-compatible amber tint */
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  /* FIX: was #fde68a */
+  background: rgba(245, 158, 11, 0.1); /* FIX: was #fffbeb (light yellow) — dark-compatible amber tint */
+  border: 1px solid rgba(245, 158, 11, 0.25); /* FIX: was #fde68a */
   border-radius: 10px;
   padding: 0.875rem 1.25rem;
   font-size: 0.8125rem;
-  color: #fbbf24;
-  /* FIX: was #92400e (very dark amber) — unreadable on dark bg */
+  color: #fbbf24; /* FIX: was #92400e (very dark amber) — unreadable on dark bg */
   line-height: 1.5;
 }
 
@@ -133,10 +130,8 @@
 
 .sectionBadge {
   margin-left: auto;
-  background: rgba(16, 185, 129, 0.12);
-  /* FIX: was #dcfce7 (light green) — transparent dark-compatible */
-  color: #34d399;
-  /* FIX: was #166534 (very dark green) — not readable on dark */
+  background: rgba(16, 185, 129, 0.12); /* FIX: was #dcfce7 (light green) — transparent dark-compatible */
+  color: #34d399; /* FIX: was #166534 (very dark green) — not readable on dark */
   font-size: 0.7rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
@@ -158,19 +153,17 @@
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
   transition: box-shadow 0.2s;
 }
 
 .vaultCard:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
 }
 
 .vaultMain {
-  border-color: rgba(139, 92, 246, 0.3);
-  /* FIX: was #c7d2fe (light indigo) — use dark-compatible purple tint */
-  background: linear-gradient(135deg, rgba(109, 40, 217, 0.12) 0%, rgba(79, 70, 229, 0.08) 100%);
-  /* FIX: was light #f5f3ff/#eef2ff — replaced with dark-compatible gradient */
+  border-color: rgba(139, 92, 246, 0.3); /* FIX: was #c7d2fe (light indigo) — use dark-compatible purple tint */
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.12) 0%, rgba(79, 70, 229, 0.08) 100%); /* FIX: was light #f5f3ff/#eef2ff — replaced with dark-compatible gradient */
 }
 
 .vaultLabel {
@@ -187,7 +180,7 @@
   font-size: 1.375rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  font-feature-settings: "tnum", "lnum";
+  font-feature-settings: "tnum","lnum";
   margin-bottom: 0.75rem;
 }
 
@@ -207,9 +200,7 @@
 }
 
 @media (max-width: 900px) {
-  .perfGrid {
-    grid-template-columns: 1fr;
-  }
+  .perfGrid { grid-template-columns: 1fr; }
 }
 
 .metricCard {
@@ -217,7 +208,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
 .metricHeader {
@@ -267,7 +258,7 @@
 .periodValue {
   font-size: 0.875rem;
   font-weight: 600;
-  font-feature-settings: "tnum", "lnum";
+  font-feature-settings: "tnum","lnum";
 }
 
 /* ── Charts ── */
@@ -278,9 +269,7 @@
 }
 
 @media (max-width: 900px) {
-  .chartsGrid {
-    grid-template-columns: 1fr;
-  }
+  .chartsGrid { grid-template-columns: 1fr; }
 }
 
 .chartCard {
@@ -288,7 +277,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 }
 
 .chartHeader {
@@ -393,7 +382,7 @@
   background: rgba(255, 255, 255, 0.03);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 /* ── Custom Tooltip ── */
@@ -402,7 +391,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 0.75rem 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   font-size: 0.8125rem;
 }
 
@@ -433,10 +422,18 @@
 }
 
 /* ── Color Utilities ── */
-.green {
-  color: #16a34a;
-}
+.green { color: #16a34a; }
+.red   { color: #dc2626; }
 
-.red {
-  color: #dc2626;
-}
+/* ── KPI icon variants — FIX: were inline style={{ background, color }} on kpiIcon divs ── */
+/* Previously: style={{ background: '#ede9fe', color: '#5b21b6' }} etc — light bg / dark text on dark card */
+.kpiIconPurple { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+.kpiIconGreen  { background: rgba(16, 185, 129, 0.12); color: #34d399; }
+.kpiIconAmber  { background: rgba(245, 158, 11, 0.1);  color: #fbbf24; }
+
+/* Chart card full-width — FIX: was inline style={{ gridColumn: '1 / -1' }} */
+.chartCardFull { grid-column: 1 / -1; }
+
+/* Legend dot colour variants — FIX: were inline style={{ background: "#10b981" }} etc */
+.legendDotGreen { background: #10b981; }
+.legendDotRed   { background: #ef4444; }

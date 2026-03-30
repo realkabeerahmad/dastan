@@ -31,7 +31,7 @@ export default function UsersClient({ users: initialUsers, currentUserId, busine
     startTransition(async () => {
       const res = await deleteUser(userId);
       if (res?.error) { setError(res.error); return; }
-      setUsers(u => u.filter(x => x.user_id !== userId));
+      setUsers((u) => u.filter((x) => x.user_id !== userId));
     });
   }
 
@@ -40,9 +40,14 @@ export default function UsersClient({ users: initialUsers, currentUserId, busine
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Team</h1>
-          <p className={styles.sub}>Managing users under <strong>{businessName}</strong></p>
+          <p className={styles.sub}>
+            Managing users under <strong>{businessName}</strong>
+          </p>
         </div>
-        <button className={styles.addBtn} onClick={() => { setShowForm(s => !s); setError(""); }}>
+        <button
+          className={styles.addBtn}
+          onClick={() => { setShowForm((s) => !s); setError(""); }}
+        >
           <UserPlus size={16} />
           Add User
         </button>
@@ -75,8 +80,12 @@ export default function UsersClient({ users: initialUsers, currentUserId, busine
                 </select>
               </div>
             </div>
-            <div style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end" }}>
-              <button type="button" onClick={() => setShowForm(false)} className={styles.cancelBtn}>Cancel</button>
+            {/* FIX: was inline style={{ display:"flex", gap:"0.75rem", justifyContent:"flex-end" }}
+                Now uses the existing .formActions CSS class */}
+            <div className={styles.formActions}>
+              <button type="button" onClick={() => setShowForm(false)} className={styles.cancelBtn}>
+                Cancel
+              </button>
               <button type="submit" className={styles.saveBtn} disabled={isPending}>
                 {isPending ? <Loader2 size={14} className="animate-spin" /> : null}
                 Create User
@@ -88,29 +97,51 @@ export default function UsersClient({ users: initialUsers, currentUserId, busine
 
       <div className={styles.table}>
         <div className={styles.tableHead}>
-          <span>Name & Email</span>
+          <span>Name &amp; Email</span>
           <span>Role</span>
           <span>Joined</span>
           <span></span>
         </div>
-        {users.map(u => (
-          <div key={u.user_id} className={`${styles.tableRow} ${u.user_id === currentUserId ? styles.selfRow : ""}`}>
+        {users.map((u) => (
+          <div
+            key={u.user_id}
+            className={`${styles.tableRow} ${u.user_id === currentUserId ? styles.selfRow : ""}`}
+          >
             <div className={styles.userCell}>
               <div className={`${styles.avatar} ${u.role === "admin" ? styles.avatarAdmin : ""}`}>
                 {u.role === "admin" ? <Shield size={14} /> : <User size={14} />}
               </div>
               <div>
-                <div className={styles.userName}>{u.name} {u.user_id === currentUserId && <span className={styles.youBadge}>you</span>}</div>
+                <div className={styles.userName}>
+                  {u.name}
+                  {u.user_id === currentUserId && (
+                    <span className={styles.youBadge}>you</span>
+                  )}
+                </div>
                 <div className={styles.userEmail}>{u.email}</div>
               </div>
             </div>
+
             <span className={`${styles.roleBadge} ${u.role === "admin" ? styles.roleAdmin : styles.roleMember}`}>
               {u.role}
             </span>
-            <span className={styles.date}>{new Date(u.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+
+            <span className={styles.date}>
+              {new Date(u.created_at).toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+
+            {/* FIX: was inline style={{ display:"flex", justifyContent:"flex-end" }} */}
+            <div className={styles.tableRowActions}>
               {u.user_id !== currentUserId && (
-                <button className={styles.deleteBtn} onClick={() => handleDelete(u.user_id)} disabled={isPending}>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => handleDelete(u.user_id)}
+                  disabled={isPending}
+                >
                   <Trash2 size={14} />
                 </button>
               )}

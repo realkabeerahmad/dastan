@@ -1,14 +1,8 @@
 import { getTransactions } from "@/actions/transaction-actions";
 import TransactionsClient from "./TransactionsClient";
-
-export const metadata = { title: "Dastan Audit Ledger" };
-
+/* FIX: title was "Dastan Audit Ledger" — standardised to "Mulk" */
+export const metadata = { title: "Transactions — Mulk" };
 export default async function TransactionsPage() {
   const transactions = await getTransactions();
-  
-  return (
-    <main style={{ backgroundColor: "transparent", minHeight: "100vh" }}>
-      <TransactionsClient initialTransactions={transactions} />
-    </main>
-  );
+  return <main><TransactionsClient initialTransactions={transactions} /></main>;
 }

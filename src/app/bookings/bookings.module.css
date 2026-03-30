@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 2rem 1.5rem;
   font-family: var(--font-geist-sans), sans-serif;
-  color: #ffffff;
+  color: #ffffff; 
 }
 
 .header {
@@ -31,10 +31,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: #ffffff;
-  /* FIX: kept white bg */
-  color: #09090b;
-  /* FIX: was #ffffff — white text on white bg was completely invisible */
+  background-color: #ffffff; /* FIX: kept white bg */
+  color: #09090b; /* FIX: was #ffffff — white text on white bg was completely invisible */
   border: 1px solid #18181b;
   border-radius: 8px;
   padding: 0.5rem 1rem;
@@ -45,15 +43,8 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-.buttonPrimary:hover {
-  background-color: #e4e4e7;
-}
-
-/* FIX: was #27272a (dark) — text became unreadable on dark hover */
-.buttonPrimary:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
+.buttonPrimary:hover { background-color: #e4e4e7; } /* FIX: was #27272a (dark) — text became unreadable on dark hover */
+.buttonPrimary:disabled { opacity: 0.7; cursor: not-allowed; }
 
 .buttonSecondary {
   display: inline-flex;
@@ -70,9 +61,7 @@
   transition: all 0.2s ease;
 }
 
-.buttonSecondary:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
+.buttonSecondary:hover { background-color: rgba(255, 255, 255, 0.05); }
 
 .emptyState {
   display: flex;
@@ -86,23 +75,9 @@
   text-align: center;
 }
 
-.emptyIcon {
-  color: #a1a1aa;
-  margin-bottom: 1rem;
-}
-
-.emptyText {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #ffffff;
-  margin: 0 0 0.25rem 0;
-}
-
-.emptySubText {
-  font-size: 0.875rem;
-  color: #a1a1aa;
-  margin: 0;
-}
+.emptyIcon { color: #a1a1aa; margin-bottom: 1rem; }
+.emptyText { font-size: 1rem; font-weight: 500; color: #ffffff; margin: 0 0 0.25rem 0; }
+.emptySubText { font-size: 0.875rem; color: #a1a1aa; margin: 0; }
 
 .grid {
   display: grid;
@@ -115,7 +90,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.25rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -129,7 +104,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.02);
   max-width: 600px;
   margin: 0 auto;
 }
@@ -149,9 +124,7 @@
   padding-bottom: 0.5rem;
 }
 
-.formGroup {
-  margin-bottom: 1.25rem;
-}
+.formGroup { margin-bottom: 1.25rem; }
 
 .label {
   display: block;
@@ -161,8 +134,7 @@
   margin-bottom: 0.5rem;
 }
 
-.input,
-.select {
+.input, .select {
   width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
@@ -174,11 +146,9 @@
   outline: none;
 }
 
-.input:focus,
-.select:focus {
+.input:focus, .select:focus {
   border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
-  /* FIX: was rgba(244,244,245,1) — opaque light ring on dark input */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08); /* FIX: was rgba(244,244,245,1) — opaque light ring on dark input */
 }
 
 .formRow {
@@ -209,12 +179,9 @@
 .nightPill {
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(16, 185, 129, 0.12);
-  /* FIX: was #f0fdf4 (light green) — dark-compatible */
-  color: #34d399;
-  /* FIX: was #166534 (dark green) — not readable on dark bg */
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  /* FIX: was #bbf7d0 */
+  background: rgba(16, 185, 129, 0.12); /* FIX: was #f0fdf4 (light green) — dark-compatible */
+  color: #34d399; /* FIX: was #166534 (dark green) — not readable on dark bg */
+  border: 1px solid rgba(16, 185, 129, 0.25); /* FIX: was #bbf7d0 */
   border-radius: 99px;
   padding: 0.2rem 0.65rem;
   white-space: nowrap;
@@ -230,10 +197,8 @@
 .segmentNights {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #34d399;
-  /* FIX: was #166534 (dark green) */
-  background: rgba(16, 185, 129, 0.1);
-  /* FIX: was #f0fdf4 (light green) */
+  color: #34d399; /* FIX: was #166534 (dark green) */
+  background: rgba(16, 185, 129, 0.1); /* FIX: was #f0fdf4 (light green) */
   border-radius: 6px;
   padding: 0.4rem 0.5rem;
   min-width: 2.5rem;
@@ -255,21 +220,14 @@
   transition: color 0.15s, background 0.15s;
   margin-bottom: 0.1rem;
 }
-
-.removeSegBtn:hover {
-  color: #f87171;
-  background: rgba(239, 68, 68, 0.1);
-}
-
-/* FIX: was #fef2f2 (light red bg) */
+.removeSegBtn:hover { color: #f87171; background: rgba(239, 68, 68, 0.1); } /* FIX: was #fef2f2 (light red bg) */
 
 .addSegBtn {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   background: none;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  /* FIX: was #d4d4d8 (light grey) — near-invisible on dark bg */
+  border: 1px dashed rgba(255, 255, 255, 0.2); /* FIX: was #d4d4d8 (light grey) — near-invisible on dark bg */
   border-radius: 7px;
   color: #a1a1aa;
   font-family: inherit;
@@ -279,11 +237,134 @@
   transition: border-color 0.15s, color 0.15s, background 0.15s;
   margin-bottom: 0.5rem;
 }
+.addSegBtn:hover { border-color: rgba(255, 255, 255, 0.5); color: #ffffff; background: rgba(255, 255, 255, 0.03); } /* FIX: added bg on hover for polish */
 
-.addSegBtn:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.03);
+
+/* ── Classes extracted from inline styles in BookingsClient ── */
+
+/* Back button inside form header */
+.backBtn {
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 1rem;
 }
 
-/* FIX: added bg on hover for polish */
+/* Form section title row (title + toggle button side by side) */
+.sectionTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Toggle "Search Existing / Enter Manually" button */
+/* FIX: was inline style with hardcoded color:"#3b82f6" */
+.toggleCustomerBtn {
+  font-size: 0.75rem;
+  background: none;
+  border: none;
+  color: #818cf8;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.15s;
+}
+.toggleCustomerBtn:hover { color: #a5b4fc; }
+
+/* Customer search panel — FIX: was background:"#f0f9ff", border:"1px dashed #bae6fd", color:"#0369a1" */
+.customerSearchPanel {
+  margin-bottom: 1rem;
+  background: rgba(99, 102, 241, 0.06);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px dashed rgba(99, 102, 241, 0.25);
+}
+.customerSearchPanel .label {
+  color: #818cf8;
+}
+
+/* Segment date fields take equal flex width */
+.segmentField { flex: 1; }
+
+/* formRow with top margin — replaces inline style={{ marginTop: "1.25rem" }} */
+.formRowSpacedTop { margin-top: 1.25rem; }
+
+/* Link wrapper on booking cards — replaces inline style={{ textDecoration:"none" }} */
+.cardLink { text-decoration: none; display: block; }
+
+/* Card header row */
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+/* Card amount — FIX: was inline color:"#18181b" (dark, invisible on dark card) */
+.cardAmount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Card platform/nights tag row */
+.cardTags {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Card metadata rows (property name, customer name) */
+/* FIX: was inline style color:"#71717a" — too low contrast; use established muted token */
+.cardMeta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+  font-size: 0.8125rem;
+  color: #a1a1aa;
+}
+.cardMetaIcon {
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+  color: #71717a;
+}
+
+/* Card footer — FIX: was border-top:"1px solid #f4f4f5" (light separator on dark card) */
+.cardFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #a1a1aa;
+}
+.cardFooterRow { margin-bottom: 0.25rem; }
+.cardFooterRight { text-align: right; }
+
+/* Form title inside form container */
+.formTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Empty state CTA — replaces inline style={{ marginTop:"1.5rem" }} */
+.emptyAction { margin-top: 1.5rem; }
+
+/* Error box — FIX: was inline style background:"#fef2f2", border:"1px solid #fca5a5" */
+.errorBox {
+  color: #f87171;
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+/* Utility: zero margin override for segment header title */
+.noMargin { margin: 0; }
